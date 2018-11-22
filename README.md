@@ -1,3 +1,3 @@
 # RayTracer
 
-Implemeting a Ray Tracer
+Implementing a Ray Tracer
