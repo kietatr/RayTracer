@@ -16,6 +16,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "Vect.h"
+#include "Ray.h"
+#include "Camera.h"
+
 using namespace std;
 
 //struct for color
@@ -104,6 +108,11 @@ int main (int argc, char *argv[]){
 	int dpi = 72;
 	int num_pix = width*height; // no. of pixels in the image
 	RGB *pixels = new RGB[num_pix];
+	
+	// three directions
+	Vect X (1,0,0);
+	Vect Y (0,1,0);
+	Vect Z (0,0,1);
 
 	
 	for (int x =0; x < width; x++){
@@ -112,9 +121,9 @@ int main (int argc, char *argv[]){
 			current = y*width + x;
 			
 			if((x>200 && x<440) && (y>200 && y<280) ){
-			pixels[current].r  = 1;
-			pixels[current].g  = 0.8;
-			pixels[current].b  = 0;
+				pixels[current].r  = 1;
+				pixels[current].g  = 0.8;
+				pixels[current].b  = 0;
 			}
 			
 			else{
