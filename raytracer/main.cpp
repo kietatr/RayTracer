@@ -111,9 +111,17 @@ int main (int argc, char *argv[]){
 			// return color of the pixel
 			current = y*width + x;
 			
+			if((x>200 && x<440) && (y>200 && y<280) ){
 			pixels[current].r  = 1;
-			pixels[current].g  = 0;
+			pixels[current].g  = 0.8;
 			pixels[current].b  = 0;
+			}
+			
+			else{
+				pixels[current].r  = 0;
+				pixels[current].g  = 0;
+				pixels[current].b  = 0;
+			}
 		}
 	}
 	
