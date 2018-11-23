@@ -1,7 +1,6 @@
 //
 //  main.cpp
 //  Created by Ojashvi Rautela on 11/22/18.
-//
 
 
 #include <iostream>
@@ -24,6 +23,13 @@ using namespace std;
 #include "Camera.h"
 #include "Color.h"
 #include "Light.h"
+
+//classes for objects on screen
+#include "Object.h"
+#include "Sphere.h"
+#include "Plane.h"
+
+
 
 //struct for color
 struct RGB{
@@ -137,9 +143,16 @@ int main (int argc, char *argv[]){
 	Color black (0.0, 0.0, 0.0, 0);
 	
 	
+	
 	//Light source and color 
 	Vect light_position (-7, 10, -10);
 	Light scene_light (light_position, white_light);
+	
+	
+	// scence objects
+	Sphere scene_sphere (Vect(0,0,0), 1, pretty_green);
+	Plane scene_plane (Y, -1, gray);
+	
 	
 	
 	for (int x =0; x < width; x++){
@@ -165,3 +178,5 @@ int main (int argc, char *argv[]){
 	
     return 0;
 }
+
+
