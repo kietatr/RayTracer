@@ -27,6 +27,6 @@ Created to set colors and light source
 
 ### Nothing new 
 
-### Dec 15 or later : present  + submit 
+### Dec 15 or later : presentation  + submit code & log  + individual reflection due 
 
 
