@@ -17,6 +17,12 @@ Created a file to simulate a camera
 Color.h, Light.h
 Created to set colors and light source 
 
+
+### 11/23/18 01:31
+
+Sphere.h, Plane.h
+For scene objects (along with some vector math for ray/object intersection test)
+
 ## TO DO 
 
 ### Nov 26 : progress report due 
