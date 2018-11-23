@@ -17,3 +17,16 @@ Created a file to simulate a camera
 Color.h, Light.h
 Created to set colors and light source 
 
+## TO DO 
+
+### Nov 26 : progress report due 
+
+### Nov 28 : finish basic ray-tracer template
+
+### Dec 9 : Implement k-d tree (10 day)
+
+### Nothing new 
+
+### Dec 15 or later : present  + submit 
+
+
