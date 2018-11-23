@@ -3,7 +3,7 @@
 ### 11/22/18 16:12
 
 main.cpp and 'saveimage()' function
-tp save an image in the folder as jpeg. First image created and saved:
+to save an image in the folder as jpeg. First image created and saved:
 ![](./raytracer/scene_demo.jpg)
 
 ### 11/22/18 19:20
