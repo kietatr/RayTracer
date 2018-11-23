@@ -65,11 +65,14 @@ double Plane::findIntersection(Ray ray){
 		
 		//opposition direction to that of ray
 		
-		//
-		Vect v = ray.getRayOrigin().add(normal.multiply(distance).negative());
+		//vector from normal to ray origin
+		Vect v = ray.getRayOrigin().subtract(normal.multiply(distance));
+		
+		//v in direction of normal
 		double val = normal.dot(v);
 		
-		return (-1*val/dp);
+		//scale based on direction (reversed) of ray
+		return (-val/dp);
 		
 	}
 	
