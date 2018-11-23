@@ -103,6 +103,54 @@ void saveimage (const char *filename, int w, int h, int dpi, RGB *data) {
 	fclose(f);
 }
 
+
+/// redo to just get minimum 
+int closestObject(vector<double> intersections){
+	//return the index of obejct closes to the camera
+	int closestObjectIndex;
+	int size = intersections.size();
+	
+	if(size == 0){
+		// it no intersections
+		return -1;
+	}
+	else if (size == 1){
+		if(intersections.at(0) > 0){
+		// greater than zero, then index of closest
+			return 0;
+		}
+		else{
+			// the only value is negative
+			return -1;
+		}
+	}
+	else{
+		// find the max val
+		double max = 0;
+		for (int i = 0; i < size; i ++){
+			if (max < intersections.at(i)){
+				max = intersections.at(i);
+			}
+		}
+		//then strat from max find the min pos
+		if (max >0){
+			//we only want +ve intersections
+			for(int i = 0; i < size; i ++){
+				if(intersections.at(i) > 0 && intersections.at(i) <= max){
+					max = intersections.at(i);
+					closestObjectIndex = i;
+				}
+			}
+			return closestObjectIndex;
+		}
+		else {
+			//all intersections are -ve
+			return -1;
+		}
+	}
+}
+
+
 int current;
 
 int main (int argc, char *argv[]){
@@ -112,6 +160,8 @@ int main (int argc, char *argv[]){
 	//image width and height
 	int width = 640;
 	int height = 480;
+	double aspect_ratio = (double)width / (double)height;
+
 	
 	//image properties
 	int dpi = 72;
@@ -153,12 +203,58 @@ int main (int argc, char *argv[]){
 	Sphere scene_sphere (Vect(0,0,0), 1, pretty_green);
 	Plane scene_plane (Y, -1, gray);
 	
+	//stack objects
+	vector<Object*> scene_objects;
+	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
+	scene_objects.push_back(dynamic_cast<Object*> (&scene_plane));
+	
+	double xval, yval;
+	
 	
 	
 	for (int x =0; x < width; x++){
 		for (int y =0; y < height; y++){
 			// return color of the pixel
 			current = y*width + x;
+			
+			//start with no anti-aliasing
+			//to create rays
+			if (width  > height) {
+				// image is wider
+				xval = ((x + 0.5)/width)*aspect_ratio - (((width - height )/(double)height/2));
+				
+				yval = ((height - y) + 0.5)/height;
+			}
+			
+			else if (height > width){
+				// image is taller
+				xval = (x + 0.5)/width;
+				
+				yval = (((height - y) + 0.5)/height)/aspect_ratio - (((height - width )/(double)width/2));
+			}
+			
+			else {
+				// image is a square
+				xval = (x + 0.5)/width;
+				yval = ((height - y) + 0.5)/height;
+				
+			}
+			
+			//rays
+			Vect cam_ray_origin = scene_cam.getCameraPosition();
+			Vect cam_ray_direction = cam_dir.add(cam_right.multiply(xval - 0.5).add(cam_down.multiply(yval - 0.5))).normalize();
+			
+			Ray cam_ray (cam_ray_origin, cam_ray_direction);
+			
+			//intersections with each object
+			vector<double> intersections;
+			
+			for (int i = 0; i < scene_objects.size(); i++){
+				intersections.push_back(scene_objects.at(i) -> findIntersection(cam_ray));
+			}
+			
+			int closest_object = closestObject(intersections);
+			
 			
 			if((x>200 && x<440) && (y>200 && y<280) ){
 				pixels[current].r  = 1;
@@ -178,5 +274,7 @@ int main (int argc, char *argv[]){
 	
     return 0;
 }
+
+
 
 

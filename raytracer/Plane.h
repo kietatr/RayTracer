@@ -51,28 +51,32 @@ Plane::Plane (Vect nor, double dis, Color col) {
 
 //returns distance from ray origin to the intersection point
 double Plane::findIntersection(Ray ray){
-	//ray being intersected already defined during prespective routine
+	// Equations https://samsymons.com/blog/math-notes-ray-plane-intersection/
+	// plane = (p−p0).n=0   (know that p0 is in the plane; p0 = normal*distace from origin)
+	// point on a ray = ray_origin+(ray_dir ∗ t)
+	// Substituting the equation of the line into the plane gives a quadratic equation
+	//((ray_origin + ray_dir ∗ t)−p0).n=0 (solving for t will give the intersection)
+	// t = -(ray_origin−p0).n / ray_dir.n
+	
 	Vect ray_dir = ray.getRayDirection();
 	
-	double dp = ray_dir.dot(normal);
+	double a = ray_dir.dot(normal);
 	
-	if (dp == 0){
+	if (a == 0){
 		//ray perp to the normal = parallel to the plane
 		return -1;
 	}
 	
 	else {
-		
-		//opposition direction to that of ray
-		
-		//vector from normal to ray origin
+		//ray_origin - p0
+		//ray_origin - point on plane (normal gives the direct, distance gives the magn)
 		Vect v = ray.getRayOrigin().subtract(normal.multiply(distance));
 		
 		//v in direction of normal
-		double val = normal.dot(v);
+		double b = normal.dot(v);
 		
-		//scale based on direction (reversed) of ray
-		return (-val/dp);
+		//t
+		return (-b/a);
 		
 	}
 	

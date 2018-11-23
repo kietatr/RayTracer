@@ -19,7 +19,7 @@ class Object{
 	Color getObjectColor () {return Color (0.0, 0.0, 0.0, 0.0); }
 	
 	//intersect b/w a ray and the object
-	double findIntersections(Ray ray){
+	double findIntersection(Ray ray){
 		return 0;
 	}
 	
