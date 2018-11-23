@@ -16,11 +16,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+using namespace std;
+
+// new classes created from scratch
 #include "Vect.h"
 #include "Ray.h"
 #include "Camera.h"
-
-using namespace std;
+#include "Color.h"
+#include "Light.h"
 
 //struct for color
 struct RGB{
@@ -113,7 +116,31 @@ int main (int argc, char *argv[]){
 	Vect X (1,0,0);
 	Vect Y (0,1,0);
 	Vect Z (0,0,1);
+	
+	//////////////// recheck /////////
+	
+	
+	// Scene Camera
+	Vect cam_pos (3, 1.5, -4);  // camera position
+	Vect look_at (0,0,0); //point our camera looks at
+	
+	Vect cam_dir = look_at.subtract(cam_pos).normalize(); //direction from camera to look_at
+	Vect cam_right = Y.cross(cam_dir).normalize();
+	Vect cam_down = cam_right.cross(cam_dir);
+	
+	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
+	// Scene Color
+	Color white_light (1.0, 1.0, 1.0, 0);
+	Color pretty_green (0.5, 1.0, 0.5, 0.3);
+	Color gray (0.5, 0.5, 0.5, 0);
+	Color black (0.0, 0.0, 0.0, 0);
+	
+	
+	//Light source and color 
+	Vect light_position (-7, 10, -10);
+	Light scene_light (light_position, white_light);
+	
 	
 	for (int x =0; x < width; x++){
 		for (int y =0; y < height; y++){
