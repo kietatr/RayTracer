@@ -27,6 +27,11 @@
 
 ![](./images/first_scene_object.jpg)
 
+### 11/24/18
+
+#### Efficient Makefile
+
+A Makefile is created (in *src/*) to reinforce efficient folder structure. Whenever `make` is run, it checks .h files (in *src/headers/*) and .cpp files (in *src/*), and create .o files in *src/obj/* if necessary.
 
 ## TO DO 
 
