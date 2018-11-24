@@ -180,7 +180,8 @@ int main (int argc, char *argv[]){
 	Vect cam_pos (3, 1.5, -4);  // camera position
 	Vect look_at (0,0,0); //point our camera looks at
 	
-	Vect cam_dir = look_at.subtract(cam_pos).normalize(); //direction from camera to look_at
+	//Vect cam_dir = look_at.add(cam_pos.negative()).normalize(); //direction from camera to look_at
+	Vect cam_dir = look_at.subtract(cam_pos).normalize();
 	Vect cam_right = Y.cross(cam_dir).normalize();
 	Vect cam_down = cam_right.cross(cam_dir);
 	

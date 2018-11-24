@@ -10,33 +10,21 @@
 #include "Color.h"
 
 class Light{
+	
 	Vect position;
 	Color color;
 	
 public:
-	
-	// declarations
-	Light();
-	
+
+	Light ();
 	Light (Vect, Color);
 	
 	//method functions
 	
-	Vect getLigthPosition () {return position;}
-	Color getLightColor () {return color;}
+	Vect getLigthPosition ();
+	Color getLightColor ();
 	
 };
-
-Light::Light () {
-	position = Vect(0,0,0);
-	color = Color(1,1,1,0);
-}
-
-Light::Light (Vect p, Color c) {
-	position = p;
-	color = c;
-}
-
 
 #endif /* Vect_h */
 
