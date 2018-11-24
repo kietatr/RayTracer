@@ -20,20 +20,10 @@ class Ray{
 	
 	//method functions
 	
-	Vect getRayOrigin () {return origin;}
-	Vect getRayDirection () {return dir;}
+	Vect getRayOrigin ();
+	Vect getRayDirection ();
 	
 };
-Ray::Ray () {
-	origin = Vect(0,0,0);
-	dir = Vect(1,0,0);
-}
-
-Ray::Ray (Vect o, Vect d) {
-	origin = o;
-	dir = d;
-}
-
 
 #endif /* Vect_h */
 

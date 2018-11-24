@@ -189,7 +189,7 @@ int main (int argc, char *argv[]){
 
 	// Scene Color
 	Color white_light (1.0, 1.0, 1.0, 0);
-	Color sphere_blue (0, 0.655, 0.882, 0.3);
+	Color sphere_blue (1, 0.655, 0.882, 0.3);
 	Color plane_gray (0.82, 0.871, 0.886, 0);
 	Color black (0.0, 0.0, 0.0, 0);
 	
