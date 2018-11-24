@@ -1,42 +1,20 @@
 CC = g++
-CFLAGS = -I.
-OBJS = main.o Vect.o Ray.o Color.o Light.o Object.o Plane.o Sphere.o Camera.o Source.o
+CFLAGS = -c -Wall
+LDFLAGS =
 
-all: raytracer
+SOURCES = main.cpp Vect.cpp Ray.cpp Color.cpp Light.cpp Object.cpp Plane.cpp Sphere.cpp Camera.cpp Source.cpp
 
-raytracer: $(OBJS)
-	$(CC) $(OBJS) -o raytracer $(CFLAGS)
-	rm -f $(OBJS)
+OBJECTS = $(SOURCES:.cpp=.o)
 
-main.o: main.cpp
-	$(CC) -c main.cpp $(CFLAGS)
+EXECUTABLE = raytracer
 
-Ray.o: Ray.cpp
-	$(CC) -c Ray.cpp $(CFLAGS)
+all: $(SOURCES) $(EXECUTABLE)
+    
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-Object.o: Object.cpp
-	$(CC) -c Object.cpp $(CFLAGS)
-
-Vect.o: Vect.cpp
-	$(CC) -c Vect.cpp $(CFLAGS)
-
-Plane.o: Plane.cpp
-	$(CC) -c Plane.cpp $(CFLAGS)
-
-Sphere.o: Sphere.cpp
-	$(CC) -c Sphere.cpp $(CFLAGS)
-
-Color.o: Color.cpp
-	$(CC) -c Color.cpp $(CFLAGS)
-
-Light.o: Light.cpp
-	$(CC) -c Light.cpp $(CFLAGS)
-
-Camera.o: Camera.cpp
-	$(CC) -c Camera.cpp $(CFLAGS)
-
-Source.o: Source.cpp
-	$(CC) -c Source.cpp $(CFLAGS)
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -f raytracer $(OBJS)
+	rm -f $(EXECUTABLE) $(OBJECTS)
