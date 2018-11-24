@@ -11,17 +11,18 @@
 #include "Color.h"
 
 class Object{
+	
+	
+	
 	public:
-
-	Object();
+	
+	Object(){};
 	
 	virtual Color getColor ();
 	
 	//intersect b/w a ray and the object
 	virtual double findIntersection (Ray);
 };
-
-Object::Object() {}
 
 Color Object::getColor () {
 	return Color (0.0, 0.0, 0.0, 0.0);
@@ -30,6 +31,8 @@ Color Object::getColor () {
 double Object::findIntersection(Ray ray){
 	return 0;
 }
+
+
 
 #endif /* Vect_h */
 

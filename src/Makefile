@@ -1,13 +1,8 @@
-OBJ = main.o
-CLS = main.cpp
-INC = -I "./"
+OBJ = main.o Color.o
 
-raytracer: $(OBJ)
-	g++ $(OBJ) -o raytracer
+raytracer: main.cpp
+	g++ main.cpp Color.cpp -o raytracer
 	rm -f $(OBJ)
 
-main.o:
-	g++ -c $(CLS) $(INC)
-
 clean:
-	rm -f $(OBJ) raytracer
+	rm -f raytracer

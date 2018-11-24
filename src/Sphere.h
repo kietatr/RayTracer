@@ -33,7 +33,7 @@ public:
 	double findIntersection(Ray); ////why virtual
 };
 
-Sphere::Sphere () {
+Sphere::Sphere (){
 	center = Vect(0,0,0);
 	radius = 1.0;
 	color = Color(0.5,0.5,0.5,0);

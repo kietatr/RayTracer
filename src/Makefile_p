@@ -1,5 +1,0 @@
-raytracer:
-	g++ main.cpp Object.cpp -o raytracer
-
-clean:
-	rm -f raytracer
