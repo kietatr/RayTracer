@@ -11,7 +11,6 @@
 #include "Vect.h"
 
 class Camera{
-	
 	//to define the coordinate frame of the scene
 	//later used to compute presepective
 	
