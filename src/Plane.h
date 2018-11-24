@@ -19,21 +19,19 @@ class Plane : public Object {
 	
 public:
 	
-	// declarations
-	Plane();
-	
+	Plane ();
 	Plane (Vect, double, Color);
 	
 	//method functions
-	double getPlaneDistance () {return distance;}
-	Color getColor () {return color;}
+	double getPlaneDistance ();
+	Color getColor ();
 	
 	//ray-plane intersection
 	//normal at any point on the plane = normal of the entire plane
-	Vect getPlaneNormal () {return normal;}
+	Vect getPlaneNormal ();
 	
 	// ray intersecting with the plane
-	double findIntersection(Ray);
+	double findIntersection (Ray);
 };
 
 Plane::Plane () {
@@ -48,9 +46,20 @@ Plane::Plane (Vect nor, double dis, Color col) {
 	color = col;
 }
 
+double Plane::getPlaneDistance () {
+	return distance;
+}
 
-//returns distance from ray origin to the intersection point
+Color Plane::getColor () {
+	return color;
+}
+
+Vect Plane::getPlaneNormal (){
+	return normal;
+}
+
 double Plane::findIntersection(Ray ray){
+	//returns distance from ray origin to the intersection point
 	// Equations https://samsymons.com/blog/math-notes-ray-plane-intersection/
 	// plane = (p−p0).n=0   (know that p0 is in the plane; p0 = normal*distace from origin)
 	// point on a ray = ray_origin+(ray_dir ∗ t)
@@ -66,7 +75,6 @@ double Plane::findIntersection(Ray ray){
 		//ray perp to the normal = parallel to the plane
 		return -1;
 	}
-	
 	else {
 		//ray_origin - p0
 		//ray_origin - point on plane (normal gives the direct, distance gives the magn)
@@ -77,9 +85,10 @@ double Plane::findIntersection(Ray ray){
 		
 		//t
 		return (-b/a);
-		
 	}
-	
 }
+
+
+
 #endif /* Vect_h */
 

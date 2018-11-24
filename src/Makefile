@@ -1,8 +1,19 @@
-OBJ = main.o Color.o
+CC = g++
+CFLAGS = -I.
+OBJS = main.o Color.o 
 
-raytracer: main.cpp
-	g++ main.cpp Color.cpp -o raytracer
-	rm -f $(OBJ)
+all: raytracer
+
+raytracer: $(OBJS)
+	$(CC) $(OBJS) -o raytracer $(CFLAGS)
+	rm -f $(OBJS)
+
+main.o: main.cpp
+	$(CC) -c main.cpp $(CFLAGS)
+
+Color.o: Color.cpp
+	$(CC) -c Color.cpp $(CFLAGS)
+
 
 clean:
-	rm -f raytracer
+	rm -f raytracer $(OBJS)

@@ -198,13 +198,13 @@ int main (int argc, char *argv[]){
 	Vect light_position (-7, 10, -10);
 	Light scene_light (light_position, white_light);
 	
+	vector<Object*> scene_objects;
 	
 	// scence objects
 	Sphere scene_sphere (Vect(0,0,0), 1,  sphere_blue);
 	Plane scene_plane (Y, -1, plane_gray);
 	
 	//stack objects
-	vector<Object*> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_plane));
 	
@@ -250,7 +250,7 @@ int main (int argc, char *argv[]){
 			vector<double> intersections;
 			
 			for (int i = 0; i < scene_objects.size(); i++){
-				intersections.push_back(scene_objects.at(i) -> findIntersection(cam_ray));
+				intersections.push_back(scene_objects.at(i)->findIntersection(cam_ray));
 			}
 			
 			int closest_object = closestObject(intersections);
