@@ -20,6 +20,8 @@ class Object{
 	
 	//intersect b/w a ray and the object
 	virtual double findIntersection (Ray);
+	
+	virtual Vect getNormalAt(Vect);
 };
 
 

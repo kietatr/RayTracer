@@ -20,6 +20,10 @@ double Plane::getPlaneDistance () {
 	return distance;
 }
 
+Vect Plane::getNormalAt (Vect point){
+	return normal;
+}
+
 Color Plane::getColor () {
 	return color;
 }

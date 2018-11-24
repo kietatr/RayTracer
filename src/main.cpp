@@ -10,6 +10,7 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+#include <algorithm>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +27,7 @@ using namespace std;
 
 //classes for objects on screen
 #include "Object.h"
+#include "Source.h"
 #include "Sphere.h"
 #include "Plane.h"
 
@@ -150,6 +152,87 @@ int closestObject(vector<double> intersections){
 	}
 }
 
+Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> scene_objects, int closest_object, vector<Source*> light_sources, double accuracy, double ambientlight){
+	//implemet shadows
+	
+	Color closest_object_color = scene_objects.at(closest_object)->getColor();
+	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
+	
+	
+	Color final_color = closest_object_color.colorScale(ambientlight);
+	
+	for (int i = 0; i < light_sources.size(); i++){
+		
+		//distance from intersection point to the light source
+		Vect light_distance = light_sources.at(i)->getLightPosition().subtract(inter_position).normalize();
+		
+		///direction from intersection point to the light source = normalize(source - intersection)
+		Vect light_dir = light_distance.normalize();
+		
+		
+		// for reflection
+		float cos_angle = closest_object_normal.dot(light_dir);
+		
+		if (cos_angle > 0){
+			//test for shadows
+			
+			bool shadow = false;
+			float magnitude_light_distance = light_distance.magnitude();
+			Ray shadow_ray (inter_position, light_dir);
+			
+			vector<double> second_intersections;
+			
+			for (int j = 0; j < scene_objects.size() && shadow == false; j++){
+				second_intersections.push_back(scene_objects.at(j)->findIntersection(shadow_ray));
+			}
+			
+			for(int s = 0; s < second_intersections.size(); s++){
+				double second_inter = second_intersections.at(s);
+				if (second_inter > accuracy){
+					if (second_inter <= magnitude_light_distance){
+						// second_inter = interaction of a rag going towards the source with an object
+						// if less than the distance to the ligth source, then ray hits some object
+						// therefore, the point of origin of ray should be in shadows
+						// point of origin of this ray = first interaction surface of the incoming ray
+						// See if the incoming ray hits the target, then send a ray backwards to source of incoming ray
+						// if it hits/intersects with an object, then the target is in behind some object = shadow
+						shadow = true;
+					}
+				}
+				break;
+			}
+			
+			if (!shadow){
+				//depends on intensity (multiplication)
+				//linear algebra .... ???
+				final_color = final_color.colorAdd(closest_object_color.colorMultiply(light_sources.at(i)->getColor()).colorScale(cos_angle));
+				
+				if(closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1){
+					//special = 0 to 1 : shininess
+					double dot1 = closest_object_normal.dot(inter_ray_direction.negative());
+					Vect scalar1 = closest_object_normal.multiply(dot1);
+					Vect add1 = scalar1.add(inter_ray_direction);
+					Vect scalar2 = add1.multiply(2);
+					Vect add2 = scalar2.subtract(inter_ray_direction);
+					
+					Vect reflection_dir = add2.normalize();
+					
+					double specular = reflection_dir.dot(light_dir);
+					
+					if (specular >0){
+						specular = pow(specular, 10);
+						final_color = final_color.colorAdd(light_sources.at(i)->getColor().colorScale(specular*closest_object_color.getSpecial()));
+					}
+				}
+				
+			}
+		}
+		
+	}
+	return final_color.clip();
+}
+
+
 
 int current;
 
@@ -160,8 +243,10 @@ int main (int argc, char *argv[]){
 	//image width and height
 	int width = 640;
 	int height = 480;
+	
 	double aspect_ratio = (double)width / (double)height;
-
+	double ambientlight = 0.2;
+	double accuracy = 0.000001; //to ensure intersectionu is outside object
 	
 	//image properties
 	int dpi = 72;
@@ -196,16 +281,21 @@ int main (int argc, char *argv[]){
 	
 	
 	//Light source and color 
-	Vect light_position (-7, 10, -10);
+	Vect light_position (7, 0, -10);
 	Light scene_light (light_position, white_light);
 	
-	vector<Object*> scene_objects;
+	//stack of light sources
+	vector<Source*> light_sources;
+	light_sources.push_back(dynamic_cast<Source*> (&scene_light));
+	
+	
 	
 	// scence objects
 	Sphere scene_sphere (Vect(0,0,0), 1,  sphere_blue);
 	Plane scene_plane (Y, -1, plane_gray);
 	
 	//stack objects
+	vector<Object*> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_plane));
 	
@@ -265,10 +355,20 @@ int main (int argc, char *argv[]){
 			
 			else{
 				//index corresponds to a scene object
-				Color this_pixel = scene_objects.at(closest_object)->getColor();
-				pixels[current].r  = this_pixel.getR();
-				pixels[current].g  = this_pixel.getG();
-				pixels[current].b  = this_pixel.getB();
+				
+				if(intersections.at(closest_object) > accuracy){
+					
+					//determines the pos and dir vectors at point of intersection
+					
+					Vect inter_position = cam_ray_origin.add(cam_ray_direction.multiply(intersections.at(closest_object)));
+					Vect inter_ray_direction = cam_ray_direction;
+					
+					Color inter_color = getColorAt(inter_position, inter_ray_direction, scene_objects, closest_object, light_sources, accuracy, ambientlight);
+					
+					pixels[current].r  = inter_color.getR();
+					pixels[current].g  = inter_color.getG();
+					pixels[current].b  = inter_color.getB();
+				}
 			}
 		}
 	}

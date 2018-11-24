@@ -7,7 +7,11 @@
 #define Color_h
 
 class Color{
-	double red, green, blue, alpha;
+	double red, green, blue;
+	
+	double special;
+	//special = 0 to 1 : shininess
+	
 	
 public:
 	
@@ -19,13 +23,22 @@ public:
 	double getR ();
 	double getG ();
 	double getB ();
-	double getAplha ();
+	double getSpecial();
 	
 	
 	void setR (double);
 	void setG (double);
 	void setB (double);
-	void setAlpha (double);
+	void setSpecial (double);
+	
+	double brightness ();
+	Color colorScale (double);
+	
+	Color colorAdd (Color);
+	Color colorMultiply (Color);
+	Color colorAverage (Color);
+	Color clip();
+	
 };
 
 #endif /* Color_h */

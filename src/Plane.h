@@ -30,6 +30,8 @@ public:
 	//normal at any point on the plane = normal of the entire plane
 	Vect getPlaneNormal ();
 	
+	Vect getNormalAt (Vect);
+	
 	// ray intersecting with the plane
 	double findIntersection (Ray);
 };

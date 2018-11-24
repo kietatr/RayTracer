@@ -6,10 +6,11 @@
 #ifndef Light_h
 #define Light_h
 
+#include "Source.h"
 #include "Vect.h"
 #include "Color.h"
 
-class Light{
+class Light : public Source {
 	
 	Vect position;
 	Color color;

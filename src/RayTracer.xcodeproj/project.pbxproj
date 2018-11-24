@@ -28,7 +28,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = /Users/OJ/Documents/COMP465/RayTracer/raytracer;
+			buildWorkingDirectory = /Users/OJ/Documents/COMP465/RayTracer/src;
 			dependencies = (
 			);
 			name = RayTracer;

@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -I.
-OBJS = main.o Vect.o Ray.o Color.o Light.o Object.o Plane.o Sphere.o Camera.o
+OBJS = main.o Vect.o Ray.o Color.o Light.o Object.o Plane.o Sphere.o Camera.o Source.o
 
 all: raytracer
 
@@ -34,6 +34,9 @@ Light.o: Light.cpp
 
 Camera.o: Camera.cpp
 	$(CC) -c Camera.cpp $(CFLAGS)
+
+Source.o: Source.cpp
+	$(CC) -c Source.cpp $(CFLAGS)
 
 clean:
 	rm -f raytracer $(OBJS)
