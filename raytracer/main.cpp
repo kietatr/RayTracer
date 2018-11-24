@@ -188,8 +188,8 @@ int main (int argc, char *argv[]){
 
 	// Scene Color
 	Color white_light (1.0, 1.0, 1.0, 0);
-	Color pretty_green (0.5, 1.0, 0.5, 0.3);
-	Color gray (0.5, 0.5, 0.5, 0);
+	Color sphere_blue (0, 0.655, 0.882, 0.3);
+	Color plane_gray (0.82, 0.871, 0.886, 0);
 	Color black (0.0, 0.0, 0.0, 0);
 	
 	
@@ -200,8 +200,8 @@ int main (int argc, char *argv[]){
 	
 	
 	// scence objects
-	Sphere scene_sphere (Vect(0,0,0), 1, pretty_green);
-	Plane scene_plane (Y, -1, gray);
+	Sphere scene_sphere (Vect(0,0,0), 1,  sphere_blue);
+	Plane scene_plane (Y, -1, plane_gray);
 	
 	//stack objects
 	vector<Object*> scene_objects;
@@ -254,18 +254,20 @@ int main (int argc, char *argv[]){
 			}
 			
 			int closest_object = closestObject(intersections);
-			
-			
-			if((x>200 && x<440) && (y>200 && y<280) ){
-				pixels[current].r  = 1;
-				pixels[current].g  = 0.8;
+		
+			if(closest_object == -1){
+				//background = black
+				pixels[current].r  = 0;
+				pixels[current].g  = 0;
 				pixels[current].b  = 0;
 			}
 			
 			else{
-				pixels[current].r  = 0;
-				pixels[current].g  = 0;
-				pixels[current].b  = 0;
+				//index corresponds to a scene object
+				Color this_pixel = scene_objects.at(closest_object)->getColor();
+				pixels[current].r  = this_pixel.getR();
+				pixels[current].g  = this_pixel.getG();
+				pixels[current].b  = this_pixel.getB();
 			}
 		}
 	}

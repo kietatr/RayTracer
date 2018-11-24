@@ -26,7 +26,7 @@ public:
 	
 	//method functions
 	double getPlaneDistance () {return distance;}
-	Color getPlaneColor () {return color;}
+	Color getColor () {return color;}
 	
 	//ray-plane intersection
 	//normal at any point on the plane = normal of the entire plane

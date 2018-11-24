@@ -27,10 +27,10 @@ public:
 	
 	Vect getSphereCenter () {return center;}
 	double getSphereRadius () {return radius;}
-	Color getSphereColor () {return color;}
+	Color getColor () {return color;}
 	
 	Vect getNormalAt(Vect);
-	double findIntersection(Ray);
+	double findIntersection(Ray); ////why virtual
 };
 
 Sphere::Sphere () {
@@ -75,7 +75,7 @@ double Sphere::findIntersection(Ray ray){
 	//solving for quad eq.
 	double discriminant = b*b - 4*a*c;
 	
-	if (discriminant > 0) {
+	if (discriminant >0) {
 		//ray intersects the sphere at 2 points (goes through the sphere)
 		double p1 = ((-1*b - sqrt(discriminant))/2) - 0.000001;  //to deal with accuracy
 		if (p1 > 0) {

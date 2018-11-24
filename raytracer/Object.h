@@ -16,10 +16,10 @@ class Object{
 	Object();
 	
 	//method function
-	Color getObjectColor () {return Color (0.0, 0.0, 0.0, 0.0); }
+	virtual Color getColor () {return Color (0.0, 0.0, 0.0, 0.0); }
 	
 	//intersect b/w a ray and the object
-	double findIntersection(Ray ray){
+	virtual double findIntersection(Ray ray){
 		return 0;
 	}
 	

@@ -1,27 +1,32 @@
 # LOG 
 
-### 11/22/18 16:12
+### 11/22/18 
 
-main.cpp and 'saveimage()' function
-to save an image in the folder as jpeg. First image created and saved:
+#### main.cpp and 'saveimage()' function
+
+-  to save an image in the folder as jpeg. 
+
+#### First image created and saved
+
 ![](./raytracer/scene_demo.jpg)
 
-### 11/22/18 19:20
+#### Vect.h, Ray.h, Camera.h, Color.h, Light.h
 
-Vect.h, Ray.h 
-Created for vectors (contains linear operations) and rays
-
-Camera.h
-Created a file to simulate a camera
-
-Color.h, Light.h
-Created to set colors and light source 
+-  vectors (contains linear operations) and rays
+-  simulate a camera
+-  set colors and light source 
+-  scene objects (along with some vector math for ray/object intersection test)
 
 
-### 11/23/18 01:31
+### 11/23/18
 
-Sphere.h, Plane.h
-For scene objects (along with some vector math for ray/object intersection test)
+#### Sphere.h, Plane.h
+-  scene objects (along with some vector math for ray/object intersection test)
+
+#### Rendered first scene with objects (sphere on a plane)
+
+![](./raytracer/first_scene_object.jpg)
+
 
 ## TO DO 
 
