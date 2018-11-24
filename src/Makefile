@@ -6,7 +6,7 @@ CC = g++
 # Path to header files
 HDIR = ./headers
 
-# Locate the directory for #include, so instead of doing #include<path/to/header.h>, we can just do #include<header.h>
+# Locate the directory for #include, so instead of doing #include "path/to/header.h", we can just do #include "header.h"
 CFLAGS = -I$(HDIR)
 
 # Path to object files
