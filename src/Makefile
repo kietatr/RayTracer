@@ -1,4 +1,5 @@
 OBJ = main.o
+CLS = main.cpp
 INC = -I "./"
 
 raytracer: $(OBJ)
@@ -6,7 +7,7 @@ raytracer: $(OBJ)
 	rm -f $(OBJ)
 
 main.o:
-	g++ -c main.cpp $(INC)
+	g++ -c $(CLS) $(INC)
 
 clean:
 	rm -f $(OBJ) raytracer

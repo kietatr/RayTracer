@@ -15,18 +15,21 @@ class Object{
 
 	Object();
 	
-	//method function
-	virtual Color getColor () {return Color (0.0, 0.0, 0.0, 0.0); }
+	virtual Color getColor ();
 	
 	//intersect b/w a ray and the object
-	virtual double findIntersection(Ray ray){
-		return 0;
-	}
-	
+	virtual double findIntersection (Ray);
 };
 
-Object::Object () {}
+Object::Object() {}
 
+Color Object::getColor () {
+	return Color (0.0, 0.0, 0.0, 0.0);
+}
+
+double Object::findIntersection(Ray ray){
+	return 0;
+}
 
 #endif /* Vect_h */
 

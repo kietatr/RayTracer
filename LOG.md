@@ -8,7 +8,7 @@
 
 #### First image created and saved
 
-![](./raytracer/scene_demo.jpg)
+![](./images/scene_demo.jpg)
 
 #### Vect.h, Ray.h, Camera.h, Color.h, Light.h
 
@@ -25,7 +25,7 @@
 
 #### Rendered first scene with objects (sphere on a plane)
 
-![](./raytracer/first_scene_object.jpg)
+![](./images/first_scene_object.jpg)
 
 
 ## TO DO 

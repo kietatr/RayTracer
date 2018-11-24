@@ -272,7 +272,7 @@ int main (int argc, char *argv[]){
 		}
 	}
 	
-	saveimage("scene.jpg", width, height, dpi, pixels);
+	saveimage("../images/scene.jpg", width, height, dpi, pixels);
 	
     return 0;
 }
