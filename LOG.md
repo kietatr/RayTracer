@@ -42,7 +42,7 @@ Ray tracer with shadow generated. Initially, we had a bug which resulted in erro
 
 We were unsuceessful in finding the bug, but re-created a .cpp file for each .h file, which solved the issue. We believe it had something to do with *virtual* functions, though we couldn't trace back the error. We now have a two sphere on a plane, with correct characteristics. 
 
-![](./images/milestones/scence_shadow.jpeg)
+![](./images/milestones/scene_shadow.jpeg)
 
 
 
