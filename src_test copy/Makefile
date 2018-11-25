@@ -1,4 +1,4 @@
-OBJ = main.o Color.o Vect.o Source.o Light.o Ray.o Camera.o Object.o
+OBJ = main.o Color.o Vect.o Source.o Light.o Ray.o Camera.o Object.o Plane.o Sphere.o
 INC = -I "./"
 
 raytracer: $(OBJ)
@@ -28,6 +28,12 @@ Camera.o:
 
 Object.o:
 	g++ -c Object.cpp $(INC)
+
+Plane.o:
+	g++ -c Plane.cpp $(INC)
+
+Sphere.o:
+	g++ -c Sphere.cpp $(INC)
 
 clean:
 	rm -f $(OBJ) raytracer

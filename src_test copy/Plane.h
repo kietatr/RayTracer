@@ -1,5 +1,10 @@
-#ifndef _Plane_H
-#define _Plane_H
+//
+//  Plane.h
+//  Created by Ojashvi Rautela on 11/22/18.
+//
+
+#ifndef Plane_h
+#define Plane_h
 
 #include "math.h"
 #include "Object.h"
@@ -7,52 +12,29 @@
 #include "Color.h"
 
 class Plane : public Object {
-	Vect normal;
-	double distance;
+	Vect normal; //perpendicular to the surface
+	double distance; // b/w the plane center to the scene center
 	Color color;
 	
-	public:
+	
+public:
 	
 	Plane ();
-	
 	Plane (Vect, double, Color);
 	
-	// method functions
-	Vect getPlaneNormal () { return normal; }
-	double getPlaneDistance () { return distance; }
-	virtual Color getColor () { return color; }
+	//method functions
+	double getPlaneDistance ();
+	Color getColor ();
 	
-	virtual Vect getNormalAt(Vect point) {
-		return normal;
-	}
+	//ray-plane intersection
+	//normal at any point on the plane = normal of the entire plane
+	Vect getPlaneNormal ();
 	
-	virtual double findIntersection(Ray ray) {
-		Vect ray_direction = ray.getRayDirection();
-		
-		double a = ray_direction.dot(normal);
-		
-		if (a == 0) {
-			// ray is parallel to the plane
-			return -1;
-		}
-		else {
-			double b = normal.dot(ray.getRayOrigin().add(normal.multiply(distance).negative()));
-			return -1*b/a;
-		}
-	}
+	Vect getNormalAt (Vect);
 	
+	// ray intersecting with the plane
+	double findIntersection (Ray);
 };
 
-Plane::Plane () {
-	normal = Vect(1,0,0);
-	distance = 0;
-	color = Color(0.5,0.5,0.5, 0);
-}
+#endif /* Plane_h */
 
-Plane::Plane (Vect normalValue, double distanceValue, Color colorValue) {
-	normal = normalValue;
-	distance = distanceValue;
-	color = colorValue;
-}
-
-#endif
