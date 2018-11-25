@@ -11,18 +11,12 @@ class Object {
 	Object ();
 	
 	// method functions
-	virtual Color getColor () { return Color (0.0, 0.0, 0.0, 0); }
+	virtual Color getColor ();
 	
-	virtual Vect getNormalAt(Vect intersection_position) {
-		return Vect (0, 0, 0);
-	}
+	virtual Vect getNormalAt(Vect);
 	
-	virtual double findIntersection(Ray ray) {
-		return 0;
-	}
+	virtual double findIntersection(Ray);
 	
 };
-
-Object::Object () {}
 
 #endif
