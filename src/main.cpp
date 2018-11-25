@@ -373,10 +373,11 @@ int main (int argc, char *argv[]){
 		}
 	}
 
+	string imagePath = "../images/scene.jpeg";
+
+	saveImage(imagePath.c_str(), width, height, dpi, pixels);
 	
-	saveImage("../images/scene.jpeg", width, height, dpi, pixels);
-	
-	cout << "Image saved to ./scene.jpeg" << endl;
+	cout << "Image saved to " << imagePath << endl;
 
     return 0;
 }
