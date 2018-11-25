@@ -1,50 +1,39 @@
-# Put this makefile inside the src directory (with all the cpp files)
+OBJ = main.o Color.o Vect.o Source.o Light.o Ray.o Camera.o Object.o Plane.o Sphere.o
+INC = -I "./"
 
-# The compiler to be used
-CC = g++
+raytracer: $(OBJ)
+	g++ $(OBJ) -o raytracer
+	rm -f $(OBJ)
 
-# Path to header files
-HDIR = ./headers
+main.o:
+	g++ -c main.cpp $(INC)
 
-# Locate the directory for #include, so instead of doing #include "path/to/header.h", we can just do #include "header.h"
-CFLAGS = -I$(HDIR)
+Color.o:
+	g++ -c Color.cpp $(INC)
 
-# Path to object files
-ODIR = ./obj
+Vect.o:
+	g++ -c Vect.cpp $(INC)
 
-# Path to library files
-LDIR = ../lib
-LIBS = -lm
+Source.o:
+	g++ -c Source.cpp $(INC)
 
-#### CHANGE THIS if adding more header files (automatically include the .h file) ####
-_DEPS = Vect.h Ray.h Color.h Light.h Object.h Plane.h Sphere.h Camera.h Source.h
+Light.o:
+	g++ -c Light.cpp $(INC)
 
-# $(patsubst pattern,replacement,text)
-DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
+Ray.o:
+	g++ -c Ray.cpp $(INC)
 
-#### CHANGE THIS if adding more cpp files (but not .h file) ####
-SOURCES = $(_DEPS:.h=.cpp) main.cpp
+Camera.o:
+	g++ -c Camera.cpp $(INC)
 
-# Object files = Sources files with .o instead of .cpp
-_OBJ = $(SOURCES:.cpp=.o)
+Object.o:
+	g++ -c Object.cpp $(INC)
 
-# $(patsubst pattern,replacement,text)
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+Plane.o:
+	g++ -c Plane.cpp $(INC)
 
-# Name of the executable file
-EXECUTABLE = raytracer
+Sphere.o:
+	g++ -c Sphere.cpp $(INC)
 
-#######################################################################
-
-$(ODIR)/%.o: %.cpp $(DEPS)
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-$(EXECUTABLE): $(OBJ)
-	$(CC) $^ -o $@ $(CFLAGS) $(LIBS)
-
-# .PHONY keeps make from doing something with a file named clean
-.PHONY: clean 
-
-clean: 
-	rm -f $(EXECUTABLE)
-	rm -f $(ODIR)/*.o
+clean:
+	rm -f $(OBJ) raytracer

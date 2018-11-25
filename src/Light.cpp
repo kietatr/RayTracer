@@ -1,14 +1,8 @@
-//
-//  Light.h
-//  Created by Ojashvi Rautela on 11/22/18.
-//
-
-
 #include "Light.h"
 
 Light::Light () {
 	position = Vect(0,0,0);
-	color = Color(1,1,1,0);
+	color = Color(1,1,1, 0);
 }
 
 Light::Light (Vect p, Color c) {
@@ -16,12 +10,6 @@ Light::Light (Vect p, Color c) {
 	color = c;
 }
 
-Vect Light::getLigthPosition () {
-	return position;
-}
-
-Color Light::getLightColor () {
-	return color;
-}
-
+Vect Light::getLightPosition () { return position; }
+Color Light::getLightColor () { return color; }
 
