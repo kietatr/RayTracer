@@ -16,13 +16,13 @@ ODIR = ./obj
 LDIR = ../lib
 LIBS = -lm
 
-#### CHANGE THIS if adding more header files ####
-_DEPS = Vect.h Ray.h Color.h Light.h Object.h Plane.h Sphere.h Camera.h Source.h
+#### CHANGE THIS if adding more header files (automatically include the .h file) ####
+_DEPS = mainFunctions.h Vect.h Ray.h Color.h Light.h Object.h Plane.h Sphere.h Camera.h Source.h
 
 # $(patsubst pattern,replacement,text)
 DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))
 
-#### CHANGE THIS if adding more cpp files ####
+#### CHANGE THIS if adding more cpp files (but not .h file) ####
 SOURCES = $(_DEPS:.h=.cpp) main.cpp
 
 # Object files = Sources files with .o instead of .cpp
