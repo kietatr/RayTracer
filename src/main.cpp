@@ -374,9 +374,9 @@ int main (int argc, char *argv[]){
 	}
 
 	
-	saveImage("./scene.bmp", width, height, dpi, pixels);
+	saveImage("../images/scene.jpeg", width, height, dpi, pixels);
 	
-	cout << "Image saved to ./scene.bmp" << endl;
+	cout << "Image saved to ./scene.jpeg" << endl;
 
     return 0;
 }
