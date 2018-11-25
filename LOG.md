@@ -35,7 +35,7 @@ A Makefile is created (in *src/*) to reinforce efficient folder structure. Whene
 
 ### 11/25/18
 
-#### Ray tracer with Shadow 
+#### Ray tracer with Shadow (no anti-aliasing)
 Ray tracer with shadow generated. Initially, we had a bug which resulted in erroneos shadows.
 
 ![](./images/milestones/scene_shadow_bug.jpg)
