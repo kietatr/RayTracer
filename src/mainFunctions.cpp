@@ -63,7 +63,7 @@ void saveimage (const char *filename, int w, int h, int dpi, RGB *data) {
 		double g = (data[i].g)*255;
 		double b = (data[i].b)*255;
 		
-		unsigned char color[3] = {(int)floor(b), (int)floor(g), (int)floor(r)};
+		unsigned char color[3] = {(unsigned char)floor(b), (unsigned char)floor(g), (unsigned char)floor(r)};
 		
 		fwrite(color, 1, 3, f);
 	}
