@@ -7,7 +7,7 @@ HDIR = ./headers
 
 INC = -I $(HDIR)
 
-_HEAD = Color.h Vect.h Source.h Light.h Ray.h Camera.h Object.h Plane.h Sphere.h
+_HEAD = mainFunctions.h Color.h Vect.h Source.h Light.h Ray.h Camera.h Object.h Plane.h Sphere.h
 _SRC = main.cpp $(_HEAD:.h=.cpp)
 _OBJ = $(_SRC:.cpp=.o)
 
