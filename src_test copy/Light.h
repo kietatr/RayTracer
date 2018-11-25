@@ -16,19 +16,11 @@ class Light : public Source {
 	Light (Vect, Color);
 	
 	// method functions
-	virtual Vect getLightPosition () { return position; }
-	virtual Color getLightColor () { return color; }
+	virtual Vect getLightPosition ();// { return position; }
+	virtual Color getLightColor ();// { return color; }
 	
 };
 
-Light::Light () {
-	position = Vect(0,0,0);
-	color = Color(1,1,1, 0);
-}
 
-Light::Light (Vect p, Color c) {
-	position = p;
-	color = c;
-}
 
 #endif
