@@ -1,7 +1,5 @@
 //
 //  Camera.h
-//  
-//
 //  Created by Ojashvi Rautela on 11/22/18.
 //
 

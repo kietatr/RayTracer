@@ -36,5 +36,5 @@ public:
 	double findIntersection (Ray);
 };
 
-#endif /* Vect_h */
+#endif /* Plane_h */
 

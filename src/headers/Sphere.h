@@ -34,5 +34,5 @@ public:
 };
 
 
-#endif /* Vect_h */
+#endif /* Sphere_h */
 

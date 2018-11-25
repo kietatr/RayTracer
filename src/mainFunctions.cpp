@@ -1,6 +1,6 @@
 // 
 // Contains the functions used in main.cpp
-//  Created by Kiet Tran on 11/24/18.
+// Created by Kiet Tran on 11/24/18.
 // 
 
 #include "mainFunctions.h"

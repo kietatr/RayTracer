@@ -1,5 +1,5 @@
 //
-//  Vect.h
+//  mainFunctions.h
 //  Created by Kiet Tran on 11/24/18.
 //
 

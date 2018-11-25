@@ -1,12 +1,13 @@
 //
-//  Source.hpp
+//  Source.h
 //  
 //
 //  Created by Ojashvi Rautela on 11/24/18.
 //
 
-#ifndef Source_hpp
-#define Source_hpp
+#ifndef Source_h
+#define Source_h
+
 #include "Vect.h"
 #include "Color.h"
 
@@ -21,4 +22,4 @@ public:
 	
 };
 
-#endif /* Source_hpp */
+#endif /* Source_h */

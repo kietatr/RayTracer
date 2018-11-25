@@ -25,5 +25,5 @@ class Object{
 };
 
 
-#endif /* Vect_h */
+#endif /* Object_h */
 

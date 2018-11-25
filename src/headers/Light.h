@@ -27,5 +27,5 @@ public:
 	
 };
 
-#endif /* Vect_h */
+#endif /* Light_h */
 

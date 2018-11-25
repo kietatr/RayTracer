@@ -25,5 +25,5 @@ class Ray{
 	
 };
 
-#endif /* Vect_h */
+#endif /* Ray_h */
 
