@@ -1,4 +1,4 @@
-OBJ = main.o Color.o Vect.o Source.o Light.o
+OBJ = main.o Color.o Vect.o Source.o Light.o Ray.o
 INC = -I "./"
 
 raytracer: $(OBJ)
@@ -19,6 +19,9 @@ Source.o:
 
 Light.o:
 	g++ -c Light.cpp $(INC)
+
+Ray.o:
+	g++ -c Ray.cpp $(INC)
 
 clean:
 	rm -f $(OBJ) raytracer
