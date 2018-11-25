@@ -22,8 +22,8 @@ public:
 	
 	//method functions
 	
-	Vect getLigthPosition ();
-	Color getLightColor ();
+	virtual Vect getLigthPosition ();
+	virtual Color getLightColor ();
 	
 };
 

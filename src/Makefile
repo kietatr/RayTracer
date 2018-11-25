@@ -17,7 +17,7 @@ LDIR = ../lib
 LIBS = -lm
 
 #### CHANGE THIS if adding more header files (automatically include the .h file) ####
-_DEPS = mainFunctions.h Vect.h Ray.h Color.h Light.h Object.h Plane.h Sphere.h Camera.h Source.h
+_DEPS = Vect.h Ray.h Color.h Light.h Object.h Plane.h Sphere.h Camera.h Source.h
 
 # $(patsubst pattern,replacement,text)
 DEPS = $(patsubst %,$(HDIR)/%,$(_DEPS))

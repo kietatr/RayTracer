@@ -18,7 +18,7 @@ public:
 	Source();
 	
 	virtual Vect getLightPosition();
-	virtual Color getColor();
+	virtual Color getLightColor();
 	
 };
 
