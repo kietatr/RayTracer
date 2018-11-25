@@ -1,4 +1,4 @@
-#include <mainFunctions.h>
+#include <App.h>
 
 // 
 // Saves the rendered image into a file

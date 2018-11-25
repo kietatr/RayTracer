@@ -3,7 +3,7 @@
 //  Created by Ojashvi Rautela on 11/22/18.
 // 
 
-#include <mainFunctions.h>
+#include <App.h>
 
 int main (int argc, char *argv[]){
     
