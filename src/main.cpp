@@ -7,7 +7,7 @@
 
 int main (int argc, char *argv[]){
     
-    cout <<"rendering... " <<endl;
+    cout <<"Rendering... " <<endl;
 	
 	//image width and height
 	int width = 640;
@@ -143,6 +143,7 @@ int main (int argc, char *argv[]){
 
 	saveImage(imagePath.c_str(), width, height, dpi, pixels);
 	
+	cout <<"Rendering done! " <<endl;
 	cout << "Image saved to " << imagePath << endl;
 
     return 0;
