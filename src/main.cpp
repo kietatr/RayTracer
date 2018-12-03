@@ -8,6 +8,9 @@
 int main (int argc, char *argv[]){
     
     cout <<"Rendering... " <<endl;
+
+    clock_t t1, t2;
+    t1 = clock();
 	
 	//image width and height
 	int width = 640;
@@ -44,7 +47,7 @@ int main (int argc, char *argv[]){
 	Color white_light (1.0, 1.0, 1.0, 0);
 	Color sphere_blue (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
 	Color sphere_orange (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
-	Color plane_gray (0.82, 0.871, 0.886, 0);
+	Color plane_gray (0.82, 0.871, 0.886, 2.0);
 	Color black (0.0, 0.0, 0.0, 0);
 	
 	// Light source
@@ -145,6 +148,12 @@ int main (int argc, char *argv[]){
 	
 	cout <<"Rendering done! " <<endl;
 	cout << "Image saved to " << imagePath << endl;
+
+	delete pixels;
+
+	t2 = clock();
+	float diff = ((float) t2 - (float) t1) / 1000000.0;
+	cout << diff << "seconds" << endl;
 
     return 0;
 }

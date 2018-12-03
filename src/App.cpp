@@ -118,21 +118,76 @@ int closestObject(vector<double> intersections){
 // Get the color that should be rendered at a ray-object intersection point
 // (for implementing shadows, reflections, and other kinds of lighting models)
 // 
-Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> scene_objects, int closest_object, vector<Source*> light_sources, double accuracy, double ambientlight){
-	//implemet shadows
+Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> scene_objects, int closest_object, vector<Source*> light_sources, double accuracy, double ambient_light){
 	
 	Color closest_object_color = scene_objects.at(closest_object)->getColor();
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
+
+	////// CHECKERED FLOOR //////
+	if(closest_object_color.getSpecial() == 2){
+		//check tile floor pattern 
+		int square = (int)floor(inter_position.getX()) + (int)float(inter_position.getZ());
+
+		if ((square % 2) == 0){
+			// 0 is going to be a black tile
+			closest_object_color.setR(0);
+			closest_object_color.setG(0);
+			closest_object_color.setB(0);
+		}
+
+		else{
+			// 0 is going to be a white tile
+			closest_object_color.setR(1);
+			closest_object_color.setG(1);
+			closest_object_color.setB(1);
+		}
+	}
 	
-	Color final_color = closest_object_color.colorScale(ambientlight);
+	Color final_color = closest_object_color.colorScale(ambient_light);
 	
+	////// REFLECTION //////
+	if (closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1) {
+		// reflection from objects with specular intensity (0-1 = specular)
+		double dot1 = closest_object_normal.dot(inter_ray_direction.negative());
+		Vect scalar1 = closest_object_normal.multiply(dot1);
+		Vect add1 = scalar1.add(inter_ray_direction);
+		Vect scalar2 = add1.multiply(2);
+		Vect add2 = scalar2.subtract(inter_ray_direction);
+		Vect reflection_dir = add2.normalize();
+
+		Ray reflection_ray (inter_position, reflection_dir);
+
+		// Determine what the ray intersects with first
+		vector<double> reflection_intersections;
+
+		for (int i = 0; i < scene_objects.size(); i++) {
+			reflection_intersections.push_back(scene_objects.at(i)->findIntersection(reflection_ray));
+		}
+
+		int closest_object_with_reflection = closestObject(reflection_intersections);
+
+		if (closest_object_with_reflection != -1) { // Reflection ray hit something
+			if (reflection_intersections.at(closest_object_with_reflection) > accuracy) {
+				Vect reflection_intersection_position = inter_position.add(reflection_dir.multiply(reflection_intersections.at(closest_object_with_reflection)));
+				Vect reflection_intersection_ray_direction = reflection_dir;
+
+				// recursive
+				Color reflection_intersection_color = getColorAt(reflection_intersection_position, reflection_intersection_ray_direction, scene_objects, closest_object_with_reflection, light_sources, accuracy, ambient_light);
+
+				final_color = final_color.colorAdd(reflection_intersection_color.colorScale(closest_object_color.getSpecial()));
+			}
+		}
+	}
+
+	////// SHADOWS //////
 	for (int i = 0; i < light_sources.size(); i++){
 		
+		// TODO: CHECK THIS AGAIN (do we normalize?)
 		//distance from intersection point to the light source
 		Vect light_distance = light_sources.at(i)->getLightPosition().subtract(inter_position).normalize();
 		
 		///direction from intersection point to the light source = normalize(source - intersection)
-		Vect light_dir = light_distance.normalize();;
+		Vect light_dir = light_distance.normalize();
 		
 		
 		// for reflection
