@@ -44,6 +44,11 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 ![](./images/milestones/scene_shadow.jpeg)
 
+### 12/02/18
+
+#### Reflections & a floor in checkered pattern (no anti-aliasing)
+
+![](./images/milestones/scene_reflections.jpeg)
 
 
 
