@@ -1,6 +1,7 @@
 //
 //  main.cpp
-//  Created by Ojashvi Rautela on 11/22/18.
+//  authors: Ojashvi Rautela and Kiet Tran 
+//  date: 11/22/18
 // 
 
 #include <App.h>
@@ -17,7 +18,7 @@ int main (int argc, char *argv[]){
 	int height = 480;
 	
 	// anti-aliasing depth
-	// aadepth = 1 -> send 4 new rays at each pixel
+	// aadepth = 4 -> send 4 new rays at each pixel
 	int aadepth = 4;
 
 	double aathreshold = 0.1;
@@ -36,9 +37,6 @@ int main (int argc, char *argv[]){
 	Vect Y (0,1,0);
 	Vect Z (0,0,1);
 	
-	//////////////// recheck /////////
-	
-	
 	// Scene Camera
 	Vect cam_pos (3, 1.5, -4);  // camera position
 	Vect look_at (0, 0, 0); //point our camera looks at
@@ -53,7 +51,7 @@ int main (int argc, char *argv[]){
 	Color white_light (1.0, 1.0, 1.0, 0);
 	Color sphere_blue (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
 	Color sphere_orange (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
-	Color plane_gray (0.82, 0.871, 0.886, 2.0);
+	Color plane_gray (0.82, 0.871, 0.886, 0.8);
 	Color black (0.0, 0.0, 0.0, 0);
 	
 	// Light source
@@ -65,7 +63,7 @@ int main (int argc, char *argv[]){
 	
 	// Scence objects
 	Sphere scene_sphere (Vect(0, 0, 0), 1, sphere_blue);
-	Sphere scene_sphere_2 (Vect(1.75, -0.25, 0), 0.5, sphere_orange);
+	Sphere scene_sphere_2 (Vect(1.75, -0.5, 0), 0.5, sphere_orange);
 	Plane scene_plane (Y, -1, plane_gray);
 	
 	// Stack objects
@@ -79,7 +77,7 @@ int main (int argc, char *argv[]){
 	double tempRed, tempGreen, tempBlue;
 	int current;
 	
-	// return color of the pixel
+	// Return color of the pixel
 	for (int x = 0; x < width; x++){
 		for (int y = 0; y < height; y++){
 			
@@ -87,62 +85,44 @@ int main (int argc, char *argv[]){
 
 			double tempRed[aadepth*aadepth], tempGreen[aadepth*aadepth], tempBlue[aadepth*aadepth]; // start with a blank pixel
 			int aaIndex; // anti-aliasing index
+			double aa_ratio;
 
 			for (int aax = 0; aax < aadepth; aax++) {
 				for (int aay = 0; aay < aadepth; aay++) {
 
 					aaIndex = aay*aadepth + aax;
 
-					// Create rays from camera to pixel
-					// aadepth = 1 -> NO anti-aliasing
 					if (aadepth == 1) {
-						if (width  > height) {
-							// image is wider
-							xval = ((x + 0.5)/width)*aspect_ratio - (((width - height )/(double)height/2));
-							yval = ((height - y) + 0.5)/height;
-						}
-						else if (height > width) {
-							// image is taller
-							xval = (x + 0.5)/width;
-							yval = (((height - y) + 0.5)/height)/aspect_ratio - (((height - width )/(double)width/2));
-						}
-						else {
-							// image is a square
-							xval = (x + 0.5)/width;
-							yval = ((height - y) + 0.5)/height;
-							
-						}
+						aa_ratio = 0.5; // aadepth = 1 -> NO anti-aliasing
 					}
-					// aadepth > 1 -> ANTI-ALIASING
 					else if (aadepth > 1) {
+						aa_ratio = (double)aax / ((double)aadepth - 1); // aadepth > 1 -> ANTI-ALIASING
+					}
 
-						double aa_ratio = (double)aax / ((double)aadepth - 1);
-
-						if (width  > height) {
-							// image is wider
-							xval = ((x + aa_ratio)/width)*aspect_ratio - (((width - height )/(double)height/2));
-							yval = ((height - y) + aa_ratio)/height;
-						}
-						else if (height > width) {
-							// image is taller
-							xval = (x + aa_ratio)/width;
-							yval = (((height - y) + aa_ratio)/height)/aspect_ratio - (((height - width )/(double)width/2));
-						}
-						else {
-							// image is a square
-							xval = (x + aa_ratio)/width;
-							yval = ((height - y) + aa_ratio)/height;
-							
-						}
+					// Create rays from camera to pixel
+					if (width  > height) {
+						// image is wider
+						xval = ((x + aa_ratio)/width)*aspect_ratio - (((width - height )/(double)height/2));
+						yval = ((height - y) + aa_ratio)/height;
+					}
+					else if (height > width) {
+						// image is taller
+						xval = (x + aa_ratio)/width;
+						yval = (((height - y) + aa_ratio)/height)/aspect_ratio - (((height - width )/(double)width/2));
+					}
+					else {
+						// image is a square
+						xval = (x + aa_ratio)/width;
+						yval = ((height - y) + aa_ratio)/height;
 					}
 					
-					//rays
+					// Rays
 					Vect cam_ray_origin = scene_cam.getCameraPosition();
 					Vect cam_ray_direction = cam_dir.add(cam_right.multiply(xval - 0.5).add(cam_down.multiply(yval - 0.5))).normalize();
 					
 					Ray cam_ray (cam_ray_origin, cam_ray_direction);
 					
-					//intersections with each object
+					// Intersections with each object
 					vector<double> intersections;
 					
 					for (int i = 0; i < scene_objects.size(); i++) {
@@ -152,19 +132,14 @@ int main (int argc, char *argv[]){
 					int closest_object = closestObject(intersections);
 				
 					if (closest_object == -1) {
-						// background = black
+						// Background = black
 						tempRed[aaIndex] = 0;
 						tempGreen[aaIndex] = 0;
 						tempBlue[aaIndex] = 0;
 					}
 					
 					else {
-						// index corresponds to a scene object
-						
-						if(intersections.at(closest_object) > accuracy){
-							
-							// determines the pos and dir vectors at point of intersection
-							
+						if (intersections.at(closest_object) > accuracy) {							
 							Vect inter_position = cam_ray_origin.add(cam_ray_direction.multiply(intersections.at(closest_object)));
 							Vect inter_ray_direction = cam_ray_direction;
 							

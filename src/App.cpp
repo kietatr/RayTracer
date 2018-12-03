@@ -124,18 +124,17 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
 
 	////// CHECKERED FLOOR //////
-	if(closest_object_color.getSpecial() == 2){
-		//check tile floor pattern 
-		int square = (int)floor(inter_position.getX()) + (int)float(inter_position.getZ());
+	if (closest_object_color.getSpecial() >= 0.5) {
+		int square = (int) inter_position.getX() + (int) inter_position.getZ();
 
-		if ((square % 2) == 0){
+		if ((square % 2) == 0) {
 			// 0 is going to be a black tile
 			closest_object_color.setR(0);
 			closest_object_color.setG(0);
 			closest_object_color.setB(0);
 		}
 
-		else{
+		else {
 			// 0 is going to be a white tile
 			closest_object_color.setR(1);
 			closest_object_color.setG(1);
@@ -143,6 +142,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 		}
 	}
 	
+	// Start with applying some constant value for ambient light
 	Color final_color = closest_object_color.colorScale(ambient_light);
 	
 	////// REFLECTION //////
