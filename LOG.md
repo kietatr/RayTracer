@@ -50,6 +50,10 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 ![](./images/milestones/scene_reflections.jpeg)
 
+#### Anti-aliasing (aadepth = 4)
+
+![](./images/milestones/scene_aadepth_4.jpeg)
+
 
 
 ## TO DO 
