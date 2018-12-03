@@ -129,16 +129,14 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 
 		if ((square % 2) == 0) {
 			// 0 is going to be a black tile
-			closest_object_color.setR(0);
-			closest_object_color.setG(0);
-			closest_object_color.setB(0);
+			// closest_object_color = Color(0.0, 0.0, 0.0, closest_object_color.getSpecial());
+			closest_object_color = closest_object_color.colorAverage(Color(0.0, 0.0, 0.0, closest_object_color.getSpecial()));
 		}
 
 		else {
-			// 0 is going to be a white tile
-			closest_object_color.setR(1);
-			closest_object_color.setG(1);
-			closest_object_color.setB(1);
+			// 1 is going to be a white tile
+			// closest_object_color = Color(1.0, 1.0, 1.0, closest_object_color.getSpecial());
+			closest_object_color = closest_object_color.colorAverage(Color(1.0, 1.0, 1.0, closest_object_color.getSpecial()));
 		}
 	}
 	
@@ -184,7 +182,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 		
 		// TODO: CHECK THIS AGAIN (do we normalize?)
 		//distance from intersection point to the light source
-		Vect light_distance = light_sources.at(i)->getLightPosition().subtract(inter_position).normalize();
+		Vect light_distance = light_sources.at(i)->getLightPosition().subtract(inter_position);
 		
 		///direction from intersection point to the light source = normalize(source - intersection)
 		Vect light_dir = light_distance.normalize();

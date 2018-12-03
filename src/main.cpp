@@ -8,7 +8,7 @@
 
 int main (int argc, char *argv[]){
     
-    cout <<"Rendering... " <<endl;
+    cout << "\nRendering... " <<endl;
 
     clock_t t1, t2;
     t1 = clock();
@@ -18,8 +18,9 @@ int main (int argc, char *argv[]){
 	int height = 480;
 	
 	// anti-aliasing depth
+	// aadepth = 1 -> NO anti-aliasing
 	// aadepth = 4 -> send 4 new rays at each pixel
-	int aadepth = 4;
+	int aadepth = 1;
 
 	double aathreshold = 0.1;
 
@@ -51,8 +52,13 @@ int main (int argc, char *argv[]){
 	Color white_light (1.0, 1.0, 1.0, 0);
 	Color sphere_blue (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
 	Color sphere_orange (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
-	Color plane_gray (0.82, 0.871, 0.886, 0.8);
+	Color plane_gray (0.82, 0.871, 0.886, 0.5);
+	Color plane_black (0.5, 0.5, 0.5, 0.5);
 	Color black (0.0, 0.0, 0.0, 0);
+
+	Color sphere_purple (105.0 / 255.0, 48.0 / 255.0, 109.0 / 255.0, 0.3);
+	Color sphere_lightPurple (165.0 / 255.0, 102.0 / 255.0, 139.0 / 255.0, 0.3);
+	Color plane_purple (14.0 / 255.0, 16.0 / 255.0, 61.0 / 255.0, 0.5);
 	
 	// Light source
 	Light scene_light (Vect(-7, 10, -10), white_light);
@@ -62,9 +68,9 @@ int main (int argc, char *argv[]){
 	light_sources.push_back(dynamic_cast<Source*> (&scene_light));
 	
 	// Scence objects
-	Sphere scene_sphere (Vect(0, 0, 0), 1, sphere_blue);
-	Sphere scene_sphere_2 (Vect(1.75, -0.5, 0), 0.5, sphere_orange);
-	Plane scene_plane (Y, -1, plane_gray);
+	Sphere scene_sphere (Vect(0, 0, 0), 1, sphere_orange);
+	Sphere scene_sphere_2 (Vect(1.75, -0.5, 0), 0.5, sphere_purple);
+	Plane scene_plane (Y, -1, plane_purple);
 	
 	// Stack objects
 	vector<Object*> scene_objects;
@@ -177,14 +183,14 @@ int main (int argc, char *argv[]){
 
 	saveImage(imagePath.c_str(), width, height, dpi, pixels);
 	
-	cout <<"Rendering done! " <<endl;
+	cout << "Rendering done! " <<endl;
 	cout << "Image saved to " << imagePath << endl;
 
 	delete pixels, tempRed, tempGreen, tempBlue;
 
 	t2 = clock();
 	float diff = ((float) t2 - (float) t1) / 1000000.0;
-	cout << diff << "seconds" << endl;
+	cout << "Rendering time: " << diff << " seconds" << endl;
 
     return 0;
 }
