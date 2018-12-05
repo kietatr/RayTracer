@@ -58,6 +58,8 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 #### Add reflections and color to the floor plane (anti-aliasing depth = 20)
 
+Took 12 minutes to render
+
 ![](./images/scene_aadepth_20.jpeg)
 
 ## TO DO 
