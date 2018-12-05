@@ -6,7 +6,9 @@
 
 #include <App.h>
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 #include <conio.h> // getch()
+#endif
 
 int main (int argc, char *argv[]){
     // anti-aliasing depth
@@ -182,12 +184,12 @@ int main (int argc, char *argv[]){
 		}
 	}
 
-	string imagePath = "../images/scene.jpeg";
+	string imagePath = "../images/scene_aadepth_" + to_string(aadepth) + ".jpeg";
 
 	saveImage(imagePath.c_str(), width, height, dpi, pixels);
 	
 	cout << "Rendering done! " <<endl;
-	cout << "Image saved to " << imagePath << endl;
+	cout << "Rendered image saved to " << imagePath << endl;
 
 	delete pixels, tempRed, tempGreen, tempBlue;
 
@@ -195,8 +197,10 @@ int main (int argc, char *argv[]){
 	float diff = ((float) t2 - (float) t1) / CLOCKS_PER_SEC;
 	cout << "Rendering time: " << diff << " seconds" << endl;
 
-	cout << "Press any key to close...";
-	getch();
+	#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+		cout << "Press any key to close...";
+		getch();
+	#endif
 
     return 0;
 }

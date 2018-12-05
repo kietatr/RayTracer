@@ -54,7 +54,11 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 ![](./images/milestones/differentAADepth/scene_aadepth_4.jpeg)
 
+### 12/05/18
 
+#### Add reflections and color to the floor plane (anti-aliasing depth = 20)
+
+![](./images/scene_aadepth_20.jpeg)
 
 ## TO DO 
 
