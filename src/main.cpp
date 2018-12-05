@@ -6,6 +6,8 @@
 
 #include <App.h>
 
+#include <conio.h> // getch()
+
 int main (int argc, char *argv[]){
     // anti-aliasing depth
 	// aadepth = 1 -> NO anti-aliasing
@@ -190,8 +192,11 @@ int main (int argc, char *argv[]){
 	delete pixels, tempRed, tempGreen, tempBlue;
 
 	t2 = clock();
-	float diff = ((float) t2 - (float) t1) / 1000000.0;
+	float diff = ((float) t2 - (float) t1) / CLOCKS_PER_SEC;
 	cout << "Rendering time: " << diff << " seconds" << endl;
+
+	cout << "Press any key to close...";
+	getch();
 
     return 0;
 }
