@@ -52,7 +52,7 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 #### Anti-aliasing (aadepth = 4)
 
-![](./images/milestones/scene_aadepth_4.jpeg)
+![](./images/milestones/differentAADepth/scene_aadepth_4.jpeg)
 
 
 

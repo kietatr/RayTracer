@@ -7,8 +7,14 @@
 #include <App.h>
 
 int main (int argc, char *argv[]){
-    
-    cout << "\nRendering... " <<endl;
+    // anti-aliasing depth
+	// aadepth = 1 -> NO anti-aliasing
+	// aadepth = 4 -> send 4 new rays at each pixel
+	int aadepth = 1;
+	cout << "\nEnter an integer for anti-aliasing depth (1 = no anti-aliasing): ";
+	cin >> aadepth;
+
+	cout << "Rendering... " <<endl;
 
     clock_t t1, t2;
     t1 = clock();
@@ -16,11 +22,6 @@ int main (int argc, char *argv[]){
 	//image width and height
 	int width = 640;
 	int height = 480;
-	
-	// anti-aliasing depth
-	// aadepth = 1 -> NO anti-aliasing
-	// aadepth = 4 -> send 4 new rays at each pixel
-	int aadepth = 1;
 
 	double aathreshold = 0.1;
 
