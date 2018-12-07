@@ -22,7 +22,7 @@ EXECUTABLE = raytracer
 
 # Create .o from .cpp (if .h is changed, recreate .o too)
 $(ODIR)/%.o: $(SDIR)/%.cpp $(HEAD)
-	g++ -c $< -o $@ $(INC)
+	g++ -c $< -o $@ $(INC) -Ofast
 
 # Create executable from .o
 $(EXECUTABLE): $(OBJ)

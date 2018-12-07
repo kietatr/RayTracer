@@ -68,7 +68,7 @@ Took 12 minutes to render
 
 Made a class to create triangles from 3 points and a normal
 
-![](./images/milestones/triangle/scene_aadepth_1.jpeg)
+![](./images/milestones/triangle/scene_aadepth_5.jpeg)
 
 ## TO DO 
 
