@@ -76,12 +76,14 @@ int main (int argc, char *argv[]){
 	Sphere scene_sphere (Vect(0, 0, 0), 1, sphere_orange);
 	Sphere scene_sphere_2 (Vect(1.75, -0.5, 0), 0.5, sphere_purple);
 	Plane scene_plane (Y, -1, plane_purple);
+	Triangle scene_triangle (Vect(2.5, -1, 0.1), Vect(0, 2, 0.1), Vect(-2.5, -1, 0.1), sphere_blue);
 	
 	// Stack objects
 	vector<Object*> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere_2));
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_plane));
+	scene_objects.push_back(dynamic_cast<Object*> (&scene_triangle));
 	
 	// Create the image
 	double xval, yval;

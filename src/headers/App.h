@@ -28,6 +28,7 @@ using namespace std;
 #include "Source.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Triangle.h"
 
 struct RGB {
 	double r;

@@ -60,7 +60,7 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 Took 12 minutes to render
 
-![](./images/scene_aadepth_20.jpeg)
+![](./images/milestones/purpleFloor/scene_aadepth_20.jpeg)
 
 ## TO DO 
 
