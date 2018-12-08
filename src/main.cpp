@@ -56,7 +56,7 @@ int main (int argc, char *argv[]){
 	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
 	// Scene Color
-	Color cyan_light (0.0, 1.0, 1.0, 0);
+	Color white_light (1.0, 1.0, 1.0, 0);
 	Color blue_reflective (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
 	Color orange_reflective (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
 	Color purple_reflective (105.0 / 255.0, 48.0 / 255.0, 109.0 / 255.0, 0.3);
@@ -64,7 +64,7 @@ int main (int argc, char *argv[]){
 	Color plane_purple (14.0 / 255.0, 16.0 / 255.0, 61.0 / 255.0, 0.5);
 	
 	// Light source
-	Light scene_light (Vect(-7, 10, 10), cyan_light);
+	Light scene_light (Vect(-7, 10, 10), white_light);
 	
 	// Stack of light sources
 	vector<Source*> light_sources;
