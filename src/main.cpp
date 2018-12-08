@@ -10,6 +10,8 @@
 #include <conio.h> // getch()
 #endif
 
+vector<Object*> scene_objects;
+
 int main (int argc, char *argv[]){
     // anti-aliasing depth
 	// aadepth = 1 -> NO anti-aliasing
@@ -44,46 +46,47 @@ int main (int argc, char *argv[]){
 	Vect Z (0,0,1);
 	
 	// Scene Camera
-	Vect cam_pos (3, 1.5, -4);  // camera position
+	Vect cam_pos (3, 5, 5);  // camera position
 	Vect look_at (0, 0, 0); //point our camera looks at
 
 	Vect cam_dir = look_at.subtract(cam_pos).normalize();
-	Vect cam_right = Y.cross(cam_dir).normalize();
-	Vect cam_down = cam_right.cross(cam_dir).normalize();
+	Vect cam_right = cam_dir.cross(Y).normalize();
+	Vect cam_down = cam_dir.cross(cam_right).normalize();
 	
 	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
 	// Scene Color
-	Color white_light (1.0, 1.0, 1.0, 0);
-	Color sphere_blue (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
-	Color sphere_orange (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
-	Color plane_gray (0.82, 0.871, 0.886, 0.5);
-	Color plane_black (0.5, 0.5, 0.5, 0.5);
-	Color black (0.0, 0.0, 0.0, 0);
-
-	Color sphere_purple (105.0 / 255.0, 48.0 / 255.0, 109.0 / 255.0, 0.3);
-	Color sphere_lightPurple (165.0 / 255.0, 102.0 / 255.0, 139.0 / 255.0, 0.3);
+	Color cyan_light (0.0, 1.0, 1.0, 0);
+	Color blue_reflective (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
+	Color orange_reflective (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
+	Color purple_reflective (105.0 / 255.0, 48.0 / 255.0, 109.0 / 255.0, 0.3);
+	Color lightPurple_reflective (165.0 / 255.0, 102.0 / 255.0, 139.0 / 255.0, 0.3);
 	Color plane_purple (14.0 / 255.0, 16.0 / 255.0, 61.0 / 255.0, 0.5);
 	
 	// Light source
-	Light scene_light (Vect(-7, 10, -10), white_light);
+	Light scene_light (Vect(-7, 10, 10), cyan_light);
 	
 	// Stack of light sources
 	vector<Source*> light_sources;
 	light_sources.push_back(dynamic_cast<Source*> (&scene_light));
 	
 	// Scence objects
-	Sphere scene_sphere (Vect(0, 0, 0), 1, sphere_orange);
-	Sphere scene_sphere_2 (Vect(1.75, -0.5, 0), 0.5, sphere_purple);
-	Plane scene_plane (Y, -1, plane_purple);
-	Triangle scene_triangle (Vect(2.5, -1, 0.1), Vect(0, 2, 0.1), Vect(-2.5, -1, 0.1), sphere_blue);
+	Sphere scene_sphere (Vect(1.75, -0.5, 0), 0.5, purple_reflective);
+	Plane scene_floor (Y, -1, plane_purple);
 	
 	// Stack objects
-	vector<Object*> scene_objects;
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
-	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere_2));
-	scene_objects.push_back(dynamic_cast<Object*> (&scene_plane));
-	scene_objects.push_back(dynamic_cast<Object*> (&scene_triangle));
+	scene_objects.push_back(dynamic_cast<Object*> (&scene_floor));
+
+	drawCube(Vect(-1, 0, -1.5), 2, 2, 2, blue_reflective);
+
+	// // Draw the coordinate system for debugging
+	// Triangle x_tri (Vect(0, 0, 1), Vect(2, 0, 0), Vect(0, 0, -1), Color(1,0,0,0));
+	// Triangle y_tri (Vect(1, 0, 0), Vect(0, 2, 0), Vect(-1, 0, 0), Color(0,1,0,0));
+	// Triangle z_tri (Vect(0, 1, 0), Vect(0, 0, 2), Vect(0, -1, 0), Color(0,0,1,0));
+	// scene_objects.push_back(dynamic_cast<Object*> (&x_tri));
+	// scene_objects.push_back(dynamic_cast<Object*> (&y_tri));
+	// scene_objects.push_back(dynamic_cast<Object*> (&z_tri));
 	
 	// Create the image
 	double xval, yval;
@@ -205,4 +208,112 @@ int main (int argc, char *argv[]){
 	#endif
 
     return 0;
+}
+
+void drawCube(Vect center, double xWidth, double yWidth, double zWidth, Color color) {
+
+	Vect min (center.getX() - xWidth/2, center.getY() - yWidth/2, center.getZ() - zWidth/2);
+	Vect max (center.getX() + xWidth/2, center.getY() + yWidth/2, center.getZ() + zWidth/2);
+
+	// BACK SIDE
+	// 
+	// min1 --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// min ---- min2
+
+	Vect min1 (min.getX(), max.getY(), min.getZ());
+	Vect min2 (max.getX(), min.getY(), min.getZ());
+	Vect min3 (max.getX(), max.getY(), min.getZ());
+	scene_objects.push_back(new Triangle(min, min1, min2, color));
+	scene_objects.push_back(new Triangle(min1, min3, min2, color));
+
+	// FRONT SIDE
+	// 
+	// max1 --- max
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max3 --- max2
+
+	Vect max1 (min.getX(), max.getY(), max.getZ());
+	Vect max2 (max.getX(), min.getY(), max.getZ());
+	Vect max3 (min.getX(), min.getY(), max.getZ());
+	scene_objects.push_back(new Triangle(max, max1, max2, color));
+	scene_objects.push_back(new Triangle(max1, max3, max2, color));
+
+	// LEFT SIDE
+	// 
+	// min1 --- max1
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// min --- max3
+
+	scene_objects.push_back(new Triangle(min1, min, max3, color));
+	scene_objects.push_back(new Triangle(max1, min1, max3, color));
+
+	// RIGHT SIDE
+	// 
+	// max --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max2 --- min2
+
+	scene_objects.push_back(new Triangle(max, max2, min2, color));
+	scene_objects.push_back(new Triangle(min3, max, min2, color));
+
+	// TOP SIDE
+	// 
+	// min1 --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max1 --- max
+
+	scene_objects.push_back(new Triangle(min1, max1, max, color));
+	scene_objects.push_back(new Triangle(min3, min1, max, color));
+
+	// BOTTOM SIDE
+	// 
+	// min --- min2
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max3 --- max2
+
+	scene_objects.push_back(new Triangle(min, max3, max2, color));
+	scene_objects.push_back(new Triangle(min2, min, max2, color));
 }
