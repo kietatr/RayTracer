@@ -64,4 +64,17 @@ Vect Vect::multiply (double scalar){
 	return Vect (x*scalar , y*scalar , z*scalar);
 }
 
-
+// 
+// https://math.stackexchange.com/questions/13261/how-to-get-a-reflection-vector
+// 
+// r: reflected vector
+// d: incoming vector
+// n: normal of the surface
+// 
+// r = d − 2(d⋅n)n
+// 
+Vect Vect::reflect (Vect normal) {
+	Vect incoming (x, y, z);
+	Vect normalScaled = (normal.multiply(incoming.dot(normal))).multiply(2);
+	return incoming.subtract(normalScaled);
+}

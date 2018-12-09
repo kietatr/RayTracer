@@ -74,7 +74,7 @@ int closestObject(vector<double> intersections){
 	int size = intersections.size();
 	
 	if(size == 0){
-		// it no intersections
+		// if no intersections
 		return -1;
 	}
 	else if (size == 1){
@@ -95,7 +95,7 @@ int closestObject(vector<double> intersections){
 				max = intersections.at(i);
 			}
 		}
-		//then strat from max find the min pos
+		//then start from max find the min pos
 		if (max > 0){
 			//we only want +ve intersections
 			for(int i = 0; i < size; i ++){
@@ -146,12 +146,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	////// REFLECTION //////
 	if (closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1) {
 		// reflection from objects with specular intensity (0-1 = specular)
-		double dot1 = closest_object_normal.dot(inter_ray_direction.negative());
-		Vect scalar1 = closest_object_normal.multiply(dot1);
-		Vect add1 = scalar1.add(inter_ray_direction);
-		Vect scalar2 = add1.multiply(2);
-		Vect add2 = scalar2.subtract(inter_ray_direction);
-		Vect reflection_dir = add2.normalize();
+		Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
 
 		Ray reflection_ray (inter_position, reflection_dir);
 
@@ -180,7 +175,6 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	////// SHADOWS //////
 	for (int i = 0; i < light_sources.size(); i++){
 		
-		// TODO: CHECK THIS AGAIN (do we normalize?)
 		//distance from intersection point to the light source
 		Vect light_distance = light_sources.at(i)->getLightPosition().subtract(inter_position);
 		

@@ -34,6 +34,7 @@ class Vect{
 	Vect add (Vect); //this + v
 	Vect subtract (Vect); // this - v
 	Vect multiply (double);
+	Vect reflect (Vect);
 };
 
 #endif /* Vect_h */
