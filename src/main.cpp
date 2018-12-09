@@ -46,8 +46,8 @@ int main (int argc, char *argv[]){
 	Vect Z (0,0,1);
 	
 	// Scene Camera
-	Vect cam_pos (3, 5, 5);  // camera position
-	Vect look_at (0, 0, 0); //point our camera looks at
+	Vect cam_pos (0, 2, 7);  // camera position
+	Vect look_at (0, 1, 0); //point our camera looks at
 
 	Vect cam_dir = look_at.subtract(cam_pos).normalize();
 	Vect cam_right = cam_dir.cross(Y).normalize();
@@ -57,28 +57,34 @@ int main (int argc, char *argv[]){
 
 	// Scene Color
 	Color white_light (1.0, 1.0, 1.0, 0);
-	Color blue_reflective (70.0 / 255.0, 159.0 / 255.0, 254.0 / 255.0, 0.3);
-	Color orange_reflective (254.0 / 255.0, 206.0 / 255.0, 70.0 / 255.0, 0.3);
-	Color purple_reflective (105.0 / 255.0, 48.0 / 255.0, 109.0 / 255.0, 0.3);
-	Color lightPurple_reflective (165.0 / 255.0, 102.0 / 255.0, 139.0 / 255.0, 0.3);
-	Color plane_purple (14.0 / 255.0, 16.0 / 255.0, 61.0 / 255.0, 0.5);
+	Color red_reflective (1, 0, 0, 0.3);
+	Color green_reflective (0, 1, 0, 0.3);
+	Color blue_reflective (0, 0, 1, 0.3);
+	Color yellow_reflective (1, 1, 0, 0.3);
+	Color cyan_reflective (0, 1, 1, 0.3);
+	Color magenta_reflective (1, 0, 1, 0.3);
+	Color plane_purple (0, 0, 0.3, 0.222);
 	
-	// Light source
-	Light scene_light (Vect(-7, 10, 10), white_light);
-	
-	// Stack of light sources
+	// Light sources
 	vector<Source*> light_sources;
+	Light scene_light (Vect(-7, 10, 10), white_light);
 	light_sources.push_back(dynamic_cast<Source*> (&scene_light));
 	
 	// Scence objects
-	Sphere scene_sphere (Vect(1.75, -0.5, 0), 0.5, purple_reflective);
 	Plane scene_floor (Y, -1, plane_purple);
-	
-	// Stack objects
-	scene_objects.push_back(dynamic_cast<Object*> (&scene_sphere));
 	scene_objects.push_back(dynamic_cast<Object*> (&scene_floor));
+	Sphere sphere1 (Vect(0, 1, 0), 2, red_reflective);
+	scene_objects.push_back(dynamic_cast<Object*> (&sphere1));
+	Sphere sphere2 (Vect(3, 3, 2), 1, green_reflective);
+	scene_objects.push_back(dynamic_cast<Object*> (&sphere2));
+	Sphere sphere3 (Vect(-1, 0, 3), 0.5, blue_reflective);
+	scene_objects.push_back(dynamic_cast<Object*> (&sphere3));
+	Sphere sphere4 (Vect(-3, -0.75, 1.5), 0.25, yellow_reflective);
+	scene_objects.push_back(dynamic_cast<Object*> (&sphere4));
+	Sphere sphere5 (Vect(-6, 0.5, -5), 1.5, cyan_reflective);
+	scene_objects.push_back(dynamic_cast<Object*> (&sphere5));
 
-	drawCube(Vect(-1, 0, -1.5), 2, 2, 2, blue_reflective);
+	drawCube(Vect(7, 0, -10), 2, 2, 2, magenta_reflective);
 
 	// // Draw the coordinate system for debugging
 	// Triangle x_tri (Vect(0, 0, 1), Vect(2, 0, 0), Vect(0, 0, -1), Color(1,0,0,0));

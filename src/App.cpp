@@ -124,7 +124,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
 
 	////// CHECKERED FLOOR //////
-	if (closest_object_color.getSpecial() >= 0.5) {
+	if (closest_object_color.getSpecial() == 0.222) {
 		int square = (int) inter_position.getX() + (int) inter_position.getZ();
 
 		if ((square % 2) == 0) {
@@ -162,9 +162,10 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 		if (closest_object_with_reflection != -1) { // Reflection ray hit something
 			if (reflection_intersections.at(closest_object_with_reflection) > accuracy) {
 				Vect reflection_intersection_position = inter_position.add(reflection_dir.multiply(reflection_intersections.at(closest_object_with_reflection)));
+				
 				Vect reflection_intersection_ray_direction = reflection_dir;
 
-				// recursive
+				// RECURSION
 				Color reflection_intersection_color = getColorAt(reflection_intersection_position, reflection_intersection_ray_direction, scene_objects, closest_object_with_reflection, light_sources, accuracy, ambient_light);
 
 				final_color = final_color.colorAdd(reflection_intersection_color.colorScale(closest_object_color.getSpecial()));
@@ -224,13 +225,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 				
 				if (closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1) {
 					//special = 0 to 1 : shininess
-					double dot1 = closest_object_normal.dot(inter_ray_direction.negative());
-					Vect scalar1 = closest_object_normal.multiply(dot1);
-					Vect add1 = scalar1.add(inter_ray_direction);
-					Vect scalar2 = add1.multiply(2);
-					Vect add2 = scalar2.subtract(inter_ray_direction);
-					
-					Vect reflection_dir = add2.normalize();
+					Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
 					
 					double specular = reflection_dir.dot(light_dir);
 					
