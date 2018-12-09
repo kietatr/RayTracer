@@ -84,7 +84,8 @@ int main (int argc, char *argv[]){
 	Sphere sphere5 (Vect(-6, 0.5, -5), 1.5, cyan_reflective);
 	scene_objects.push_back(dynamic_cast<Object*> (&sphere5));
 
-	drawCube(Vect(7, 0, -10), 2, 2, 2, magenta_reflective);
+	vector<Object*> cubeTriangles = drawCube(Vect(7, 0, -10), 2, 2, 2, magenta_reflective);
+	scene_objects.insert(end(scene_objects), begin(cubeTriangles), end(cubeTriangles));
 
 	// // Draw the coordinate system for debugging
 	// Triangle x_tri (Vect(0, 0, 1), Vect(2, 0, 0), Vect(0, 0, -1), Color(1,0,0,0));
@@ -214,112 +215,4 @@ int main (int argc, char *argv[]){
 	#endif
 
     return 0;
-}
-
-void drawCube(Vect center, double xWidth, double yWidth, double zWidth, Color color) {
-
-	Vect min (center.getX() - xWidth/2, center.getY() - yWidth/2, center.getZ() - zWidth/2);
-	Vect max (center.getX() + xWidth/2, center.getY() + yWidth/2, center.getZ() + zWidth/2);
-
-	// BACK SIDE
-	// 
-	// min1 --- min3
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// min ---- min2
-
-	Vect min1 (min.getX(), max.getY(), min.getZ());
-	Vect min2 (max.getX(), min.getY(), min.getZ());
-	Vect min3 (max.getX(), max.getY(), min.getZ());
-	scene_objects.push_back(new Triangle(min, min1, min2, color));
-	scene_objects.push_back(new Triangle(min1, min3, min2, color));
-
-	// FRONT SIDE
-	// 
-	// max1 --- max
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// max3 --- max2
-
-	Vect max1 (min.getX(), max.getY(), max.getZ());
-	Vect max2 (max.getX(), min.getY(), max.getZ());
-	Vect max3 (min.getX(), min.getY(), max.getZ());
-	scene_objects.push_back(new Triangle(max, max1, max2, color));
-	scene_objects.push_back(new Triangle(max1, max3, max2, color));
-
-	// LEFT SIDE
-	// 
-	// min1 --- max1
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// min --- max3
-
-	scene_objects.push_back(new Triangle(min1, min, max3, color));
-	scene_objects.push_back(new Triangle(max1, min1, max3, color));
-
-	// RIGHT SIDE
-	// 
-	// max --- min3
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// max2 --- min2
-
-	scene_objects.push_back(new Triangle(max, max2, min2, color));
-	scene_objects.push_back(new Triangle(min3, max, min2, color));
-
-	// TOP SIDE
-	// 
-	// min1 --- min3
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// max1 --- max
-
-	scene_objects.push_back(new Triangle(min1, max1, max, color));
-	scene_objects.push_back(new Triangle(min3, min1, max, color));
-
-	// BOTTOM SIDE
-	// 
-	// min --- min2
-	//  |\       |
-	//  | \      |
-	//  |  \     |
-	//  |   \    |
-	//  |    \   |
-	//  |     \  |
-	//  |      \ |
-	//  |       \|
-	// max3 --- max2
-
-	scene_objects.push_back(new Triangle(min, max3, max2, color));
-	scene_objects.push_back(new Triangle(min2, min, max2, color));
 }

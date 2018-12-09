@@ -242,4 +242,113 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	return final_color.clip();
 }
 
+vector<Object*> drawCube(Vect center, double xWidth, double yWidth, double zWidth, Color color) {
+	vector<Object*> triangles;
 
+	Vect min (center.getX() - xWidth/2, center.getY() - yWidth/2, center.getZ() - zWidth/2);
+	Vect max (center.getX() + xWidth/2, center.getY() + yWidth/2, center.getZ() + zWidth/2);
+
+	// BACK SIDE
+	// 
+	// min1 --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// min ---- min2
+
+	Vect min1 (min.getX(), max.getY(), min.getZ());
+	Vect min2 (max.getX(), min.getY(), min.getZ());
+	Vect min3 (max.getX(), max.getY(), min.getZ());
+	triangles.push_back(new Triangle(min, min1, min2, color));
+	triangles.push_back(new Triangle(min1, min3, min2, color));
+
+	// FRONT SIDE
+	// 
+	// max1 --- max
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max3 --- max2
+
+	Vect max1 (min.getX(), max.getY(), max.getZ());
+	Vect max2 (max.getX(), min.getY(), max.getZ());
+	Vect max3 (min.getX(), min.getY(), max.getZ());
+	triangles.push_back(new Triangle(max, max1, max2, color));
+	triangles.push_back(new Triangle(max1, max3, max2, color));
+
+	// LEFT SIDE
+	// 
+	// min1 --- max1
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// min --- max3
+
+	triangles.push_back(new Triangle(min1, min, max3, color));
+	triangles.push_back(new Triangle(max1, min1, max3, color));
+
+	// RIGHT SIDE
+	// 
+	// max --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max2 --- min2
+
+	triangles.push_back(new Triangle(max, max2, min2, color));
+	triangles.push_back(new Triangle(min3, max, min2, color));
+
+	// TOP SIDE
+	// 
+	// min1 --- min3
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max1 --- max
+
+	triangles.push_back(new Triangle(min1, max1, max, color));
+	triangles.push_back(new Triangle(min3, min1, max, color));
+
+	// BOTTOM SIDE
+	// 
+	// min --- min2
+	//  |\       |
+	//  | \      |
+	//  |  \     |
+	//  |   \    |
+	//  |    \   |
+	//  |     \  |
+	//  |      \ |
+	//  |       \|
+	// max3 --- max2
+
+	triangles.push_back(new Triangle(min, max3, max2, color));
+	triangles.push_back(new Triangle(min2, min, max2, color));
+
+	return triangles;
+}
