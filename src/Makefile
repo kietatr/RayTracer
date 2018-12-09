@@ -7,7 +7,8 @@ HDIR = ./headers
 
 INC = -I $(HDIR)
 
-_HEAD = App.h Color.h Vect.h Source.h Light.h Ray.h Camera.h Object.h Plane.h Sphere.h
+# EDIT _HEAD when adding more files
+_HEAD = App.h Color.h Vect.h Source.h Light.h Ray.h Camera.h Object.h Plane.h Sphere.h Triangle.h
 _SRC = main.cpp $(_HEAD:.h=.cpp)
 _OBJ = $(_SRC:.cpp=.o)
 
@@ -21,7 +22,7 @@ EXECUTABLE = raytracer
 
 # Create .o from .cpp (if .h is changed, recreate .o too)
 $(ODIR)/%.o: $(SDIR)/%.cpp $(HEAD)
-	g++ -c $< -o $@ $(INC)
+	g++ -c $< -o $@ $(INC) -Ofast
 
 # Create executable from .o
 $(EXECUTABLE): $(OBJ)

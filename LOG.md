@@ -60,7 +60,15 @@ We were unsuceessful in finding the bug, but re-created a .cpp file for each .h 
 
 Took 12 minutes to render
 
-![](./images/scene_aadepth_20.jpeg)
+![](./images/milestones/purpleFloor/scene_aadepth_20.jpeg)
+
+### 12/07/18
+
+#### Triangle.cpp
+
+Made a class to create triangles from 3 points and a normal
+
+![](./images/milestones/triangle/scene_aadepth_5.jpeg)
 
 ## TO DO 
 

@@ -1,5 +1,5 @@
-#ifndef mainFunctions_h
-#define mainFunctions_h
+#ifndef App_h
+#define App_h
 
 #include <iostream>
 #include <fstream>
@@ -28,6 +28,7 @@ using namespace std;
 #include "Source.h"
 #include "Sphere.h"
 #include "Plane.h"
+#include "Triangle.h"
 
 struct RGB {
 	double r;
@@ -40,5 +41,6 @@ void saveImage (const char *filename, int w, int h, int dpi, RGB *data);
 int closestObject(vector<double> intersections);
 
 Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> scene_objects, int closest_object, vector<Source*> light_sources, double accuracy, double ambientlight);
+void drawCube(Vect center, double xWidth, double yWidth, double zWidth, Color color);
 
 #endif

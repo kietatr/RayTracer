@@ -252,3 +252,5 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	}
 	return final_color.clip();
 }
+
+
