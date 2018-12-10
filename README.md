@@ -1,12 +1,12 @@
 # RayTracer
 
-## Ojashvi Rautela and Kiet Tran
+### Ojashvi Rautela and Kiet Tran
 
 Implementing a ray tracer from scratch.
 
-# Build and run the code
+## Build and run the code
 
-## Windows
+### Windows
 
 1. Download and install [Cygwin](https://cygwin.com/install.html "Cygwin's Download Page"). 
 
@@ -14,7 +14,7 @@ Implementing a ray tracer from scratch.
 
 3. Instead of running the command `./raytracer`, you can double click on `raytracer.exe` in the `RayTracer/src` folder to run the program.
 
-## Mac and Linux
+### Mac and Linux
 
 Open Terminal and run the following commands: 
 
@@ -26,19 +26,19 @@ make
 ./raytracer
 ```
 
-# Overall architecture
+## Overall architecture
 
 TODO: fill this up
 
-# Important performance issues
+## Important performance issues
 
 TODO: fill this up
 
-# Known bugs
+## Known bugs
 
 TODO: fill this up
 
-# Latest result
+## Latest result
 
 So far, the `raytracer` executable will generate this image (with anti-aliasing depth = 1):
 
