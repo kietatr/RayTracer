@@ -42,4 +42,6 @@ TODO: fill this up
 
 So far, the `raytracer` executable will generate this image (with anti-aliasing depth = 1):
 
-![Most Recent Result Image](./images/milestones/dec9/scene_aadepth_1.jpeg)
+<p align="center">
+  <img src="./images/milestones/dec9/scene_aadepth_1.jpeg" alt="Most Recent Result Image" width="500"/>
+</p>
