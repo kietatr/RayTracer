@@ -8,7 +8,7 @@
 Sphere::Sphere (){
 	center = Vect(0,0,0);
 	radius = 1.0;
-	color = Color(0.5,0.5,0.5,0);
+	color = Color(0.5, 0.5, 0.5, 0, 0);
 }
 
 Sphere::Sphere (Vect cen, double rad, Color col) {

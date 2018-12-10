@@ -56,14 +56,14 @@ int main (int argc, char *argv[]){
 	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
 	// Scene Color
-	Color white_light (1.0, 1.0, 1.0, 0);
-	Color red_reflective (1, 0, 0, 0.3);
-	Color green_reflective (0, 1, 0, 0.3);
-	Color blue_reflective (0, 0, 1, 0.3);
-	Color yellow_reflective (1, 1, 0, 0.3);
-	Color cyan_reflective (0, 1, 1, 0.3);
-	Color magenta_reflective (1, 0, 1, 0.3);
-	Color plane_purple (0, 0, 0.3, 0.222);
+	Color white_light (1.0, 1.0, 1.0, 0, 0);
+	Color red_reflective (1, 0, 0, 0.3, 0.5);
+	Color green_reflective (0, 1, 0, 0.3, 0.5);
+	Color blue_reflective (0, 0, 1, 0.3, 0.5);
+	Color yellow_reflective (1, 1, 0, 0.3, 0.5);
+	Color cyan_reflective (0, 1, 1, 0.3, 0.5);
+	Color magenta_reflective (1, 0, 1, 0.3, 0.5);
+	Color plane_purple (0, 0, 0.3, 0.222, 0);
 	
 	// Light sources
 	vector<Source*> light_sources;
@@ -88,9 +88,9 @@ int main (int argc, char *argv[]){
 	scene_objects.insert(end(scene_objects), begin(cubeTriangles), end(cubeTriangles));
 
 	// // Draw the coordinate system for debugging
-	// Triangle x_tri (Vect(0, 0, 1), Vect(2, 0, 0), Vect(0, 0, -1), Color(1,0,0,0));
-	// Triangle y_tri (Vect(1, 0, 0), Vect(0, 2, 0), Vect(-1, 0, 0), Color(0,1,0,0));
-	// Triangle z_tri (Vect(0, 1, 0), Vect(0, 0, 2), Vect(0, -1, 0), Color(0,0,1,0));
+	// Triangle x_tri (Vect(0, 0, 1), Vect(2, 0, 0), Vect(0, 0, -1), Color(1,0,0,0,0));
+	// Triangle y_tri (Vect(1, 0, 0), Vect(0, 2, 0), Vect(-1, 0, 0), Color(0,1,0,0,0));
+	// Triangle z_tri (Vect(0, 1, 0), Vect(0, 0, 2), Vect(0, -1, 0), Color(0,0,1,0,0));
 	// scene_objects.push_back(dynamic_cast<Object*> (&x_tri));
 	// scene_objects.push_back(dynamic_cast<Object*> (&y_tri));
 	// scene_objects.push_back(dynamic_cast<Object*> (&z_tri));

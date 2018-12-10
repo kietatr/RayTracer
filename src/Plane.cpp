@@ -5,9 +5,9 @@
 #include "Plane.h"
 
 Plane::Plane () {
-	normal = Vect(1,0,0); // default : x direction
+	normal = Vect(1, 0, 0); // default : x direction
 	distance = 0.0;
-	color = Color(0.5,0.5,0.5,0);
+	color = Color(0.5, 0.5, 0.5, 0, 0);
 }
 
 Plane::Plane (Vect nor, double dis, Color col) {

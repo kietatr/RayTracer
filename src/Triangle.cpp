@@ -8,7 +8,7 @@ Triangle::Triangle () {
 	A = Vect(1,0,0);
 	B = Vect(0,1,0);
 	C = Vect(0,0,1);
-	color = Color(0.5,0.5,0.5,0.5);
+	color = Color(0.5, 0.5, 0.5, 0, 0);
 	normal = getTriangleNormal();
 	distance = getTriangleDistance();
 }

@@ -9,27 +9,27 @@
 class Color{
 	double red, green, blue;
 	
-	double special;
-	//special = 0 to 1 : shininess
-	
+	// double special;
+	double reflectivity, transparency;
 	
 public:
 	
 	Color ();
-	Color (double, double , double, double);
+	Color (double, double, double, double, double);
 	
 	
 	//method functions
 	double getR ();
 	double getG ();
 	double getB ();
-	double getSpecial();
-	
+	// double getSpecial();
+	double getReflectivity();
+	double getTransparency();
 	
 	void setR (double);
 	void setG (double);
 	void setB (double);
-	void setSpecial (double);
+	// void setSpecial (double);
 	
 	double brightness ();
 	Color colorScale (double);

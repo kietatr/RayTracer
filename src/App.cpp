@@ -124,19 +124,19 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
 
 	////// CHECKERED FLOOR //////
-	if (closest_object_color.getSpecial() == 0.222) {
+	if (closest_object_color.getReflectivity() == 0.222) {
 		int square = (int) inter_position.getX() + (int) inter_position.getZ();
 
 		if ((square % 2) == 0) {
 			// 0 is going to be a black tile
-			// closest_object_color = Color(0.0, 0.0, 0.0, closest_object_color.getSpecial());
-			closest_object_color = closest_object_color.colorAverage(Color(0.0, 0.0, 0.0, closest_object_color.getSpecial()));
+			// closest_object_color = Color(0.0, 0.0, 0.0, closest_object_color.getReflectivity());
+			closest_object_color = closest_object_color.colorAverage(Color(0.0, 0.0, 0.0, closest_object_color.getReflectivity(), 0));
 		}
 
 		else {
 			// 1 is going to be a white tile
-			// closest_object_color = Color(1.0, 1.0, 1.0, closest_object_color.getSpecial());
-			closest_object_color = closest_object_color.colorAverage(Color(1.0, 1.0, 1.0, closest_object_color.getSpecial()));
+			// closest_object_color = Color(1.0, 1.0, 1.0, closest_object_color.getReflectivity());
+			closest_object_color = closest_object_color.colorAverage(Color(1.0, 1.0, 1.0, closest_object_color.getReflectivity(), 0));
 		}
 	}
 	
@@ -144,7 +144,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Color final_color = closest_object_color.colorScale(ambient_light);
 	
 	////// REFLECTION //////
-	if (closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1) {
+	if (closest_object_color.getReflectivity() > 0 && closest_object_color.getReflectivity() <= 1) {
 		// reflection from objects with specular intensity (0-1 = specular)
 		Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
 
@@ -168,7 +168,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 				// RECURSION
 				Color reflection_intersection_color = getColorAt(reflection_intersection_position, reflection_intersection_ray_direction, scene_objects, closest_object_with_reflection, light_sources, accuracy, ambient_light);
 
-				final_color = final_color.colorAdd(reflection_intersection_color.colorScale(closest_object_color.getSpecial()));
+				final_color = final_color.colorAdd(reflection_intersection_color.colorScale(closest_object_color.getReflectivity()));
 			}
 		}
 	}
@@ -223,7 +223,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 				//linear algebra .... ???
 				final_color = final_color.colorAdd(closest_object_color.colorMultiply(light_sources.at(i)->getLightColor()).colorScale(cos_angle));
 				
-				if (closest_object_color.getSpecial() > 0 && closest_object_color.getSpecial() <= 1) {
+				if (closest_object_color.getReflectivity() > 0 && closest_object_color.getReflectivity() <= 1) {
 					//special = 0 to 1 : shininess
 					Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
 					
@@ -231,7 +231,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 					
 					if (specular > 0) {
 						specular = pow(specular, 10);
-						final_color = final_color.colorAdd(light_sources.at(i)->getLightColor().colorScale(specular*closest_object_color.getSpecial()));
+						final_color = final_color.colorAdd(light_sources.at(i)->getLightColor().colorScale(specular*closest_object_color.getReflectivity()));
 					}
 				}
 				

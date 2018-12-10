@@ -2,7 +2,7 @@
 
 Light::Light () {
 	position = Vect(0,0,0);
-	color = Color(1,1,1, 0);
+	color = Color(1,1,1,0,0);
 }
 
 Light::Light (Vect p, Color c) {
