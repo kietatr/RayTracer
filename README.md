@@ -8,7 +8,7 @@ Implementing a ray tracer from scratch.
 
 ## Windows
 
-1. Download [Cygwin](https://cygwin.com/install.html "Cygwin's Download Page"). 
+1. Download and install [Cygwin](https://cygwin.com/install.html "Cygwin's Download Page"). 
 
 2. Open Cygwin, then run the same commands for Mac and Linux (described in the section right after this one).
 
