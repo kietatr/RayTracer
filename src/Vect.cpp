@@ -78,3 +78,28 @@ Vect Vect::reflect (Vect normal) {
 	Vect normalScaled = (normal.multiply(incoming.dot(normal))).multiply(2);
 	return incoming.subtract(normalScaled);
 }
+
+// 
+// https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/refract.xhtml
+// 
+// Given:
+// - the current vector as the incident vector: I 
+// - surface normal: N 
+// - ratio of indices of refraction: eta. 
+// Return: the refraction vector, R.
+// 
+Vect Vect::refract (Vect N, float eta) {
+	Vect I (x, y, z);
+	Vect R (0,0,0);
+
+	float k = 1.0 - eta * eta * (1.0 - N.dot(I) * N.dot(I));
+
+    if (k < 0.0) {
+        return R;
+    }
+    else {
+    	// R = I * eta - N * (eta * dot(N, I) + sqrt(k));
+    	R = (I.multiply(eta)).subtract(N.multiply(eta * N.dot(I) + sqrt(k)));
+        return R;
+    }
+}

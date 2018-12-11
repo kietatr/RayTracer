@@ -32,7 +32,7 @@ int main (int argc, char *argv[]){
 	double aathreshold = 0.1;
 
 	double aspect_ratio = (double)width / (double)height;
-	double ambientlight = 0.2;
+	double ambientlight = 0.15;
 	double accuracy = 0.000001; //to ensure intersection is outside object
 	
 	//image properties
@@ -56,19 +56,22 @@ int main (int argc, char *argv[]){
 	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
 	// Scene Color
-	Color white_light (1.0, 1.0, 1.0, 0, 0);
-	Color red_reflective (1, 0, 0, 0.0, 0.5);
+	Color white_light (1, 1, 1, 0, 0);
+	Color yellow_light (0.7, 0.7, 0.0, 0, 0);
+	Color red_reflective (1, 0, 0, 0.5, 0.9);
 	Color green_reflective (0, 1, 0, 0.3, 0.0);
-	Color blue_reflective (0, 0, 1, 0.2, 0.0);
+	Color blue_reflective (0, 0, 1, 0.5, 0.0);
 	Color yellow_reflective (1, 1, 0, 0.3, 0.0);
-	Color cyan_reflective (0, 1, 1, 0.3, 0.0);
+	Color cyan_reflective (0, 1, 1, 0.4, 0.0);
 	Color magenta_reflective (1, 0, 1, 0.2, 0.0);
-	Color plane_purple (0, 0, 0.3, 0.222, 0);
+	Color plane_purple (0, 0, 0.5, 0.222, 0);
 	
 	// Light sources
 	vector<Source*> light_sources;
 	Light scene_light (Vect(-7, 10, 10), white_light);
 	light_sources.push_back(dynamic_cast<Source*> (&scene_light));
+	// Light scene_light2 (Vect(5, 6, -6), yellow_light);
+	// light_sources.push_back(dynamic_cast<Source*> (&scene_light2));
 	
 	// Scence objects
 	Plane scene_floor (Y, -1, plane_purple);
@@ -164,9 +167,8 @@ int main (int argc, char *argv[]){
 					else {
 						if (intersections.at(closest_object) > accuracy) {							
 							Vect inter_position = cam_ray_origin.add(cam_ray_direction.multiply(intersections.at(closest_object)));
-							Vect inter_ray_direction = cam_ray_direction;
 							
-							Color inter_color = getColorAt(inter_position, inter_ray_direction, scene_objects, closest_object, light_sources, accuracy, ambientlight, 0);
+							Color inter_color = getColorAt(inter_position, cam_ray_direction, scene_objects, closest_object, light_sources, accuracy, ambientlight, 0);
 							
 							tempRed[aaIndex] = inter_color.getR();
 							tempGreen[aaIndex] = inter_color.getG();

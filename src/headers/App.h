@@ -48,4 +48,6 @@ vector<Object*> drawCube(Vect center, double xWidth, double yWidth, double zWidt
 
 double mix(const double &a, const double &b, const double &mix);
 
+Color mixColor(Color a, Color b, float mix);
+
 #endif

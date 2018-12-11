@@ -28,10 +28,6 @@ double Color::getB () {
 	return blue;
 }
 
-// double Color::getSpecial () {
-// 	return special;
-// }
-
 double Color::getReflectivity() {
 	return reflectivity;
 }
@@ -51,10 +47,6 @@ void Color::setG  (double g) {
 void Color::setB (double b) {
 	blue = b;
 }
-
-// void Color::setSpecial (double a) {
-// 	special = a;
-// }
 
 double Color::brightness(){
 	return(red + green + blue)/3;
@@ -89,9 +81,14 @@ Color Color::clip(){
 	if (red > 1) {red = 1;}
 	if (green > 1) {green = 1;}
 	if (blue > 1) {blue = 1;}
+	if (reflectivity > 1) {reflectivity = 1;}
+	if (transparency > 1) {transparency = 1;}
+
 	if (red < 0) {red = 0;}
 	if (green < 0) {green = 0;}
 	if (blue < 0) {blue = 0;}
+	if (reflectivity < 0) {reflectivity = 0;}
+	if (transparency < 0) {transparency = 0;}
 	
 	return Color (red, green, blue, reflectivity, transparency);
 }
