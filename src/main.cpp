@@ -57,12 +57,12 @@ int main (int argc, char *argv[]){
 
 	// Scene Color
 	Color white_light (1.0, 1.0, 1.0, 0, 0);
-	Color red_reflective (1, 0, 0, 0.3, 0.5);
-	Color green_reflective (0, 1, 0, 0.3, 0.5);
-	Color blue_reflective (0, 0, 1, 0.3, 0.5);
-	Color yellow_reflective (1, 1, 0, 0.3, 0.5);
-	Color cyan_reflective (0, 1, 1, 0.3, 0.5);
-	Color magenta_reflective (1, 0, 1, 0.3, 0.5);
+	Color red_reflective (1, 0, 0, 0.0, 0.5);
+	Color green_reflective (0, 1, 0, 0.3, 0.0);
+	Color blue_reflective (0, 0, 1, 0.2, 0.0);
+	Color yellow_reflective (1, 1, 0, 0.3, 0.0);
+	Color cyan_reflective (0, 1, 1, 0.3, 0.0);
+	Color magenta_reflective (1, 0, 1, 0.2, 0.0);
 	Color plane_purple (0, 0, 0.3, 0.222, 0);
 	
 	// Light sources
@@ -166,7 +166,7 @@ int main (int argc, char *argv[]){
 							Vect inter_position = cam_ray_origin.add(cam_ray_direction.multiply(intersections.at(closest_object)));
 							Vect inter_ray_direction = cam_ray_direction;
 							
-							Color inter_color = getColorAt(inter_position, inter_ray_direction, scene_objects, closest_object, light_sources, accuracy, ambientlight);
+							Color inter_color = getColorAt(inter_position, inter_ray_direction, scene_objects, closest_object, light_sources, accuracy, ambientlight, 0);
 							
 							tempRed[aaIndex] = inter_color.getR();
 							tempGreen[aaIndex] = inter_color.getG();
