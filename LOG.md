@@ -76,6 +76,12 @@ Made a class to create triangles from 3 points and a normal
 
 ![](./images/milestones/dec9/scene_aadepth_1.jpeg)
 
+### 12/11/18
+
+#### Trying to implement refraction, not working
+
+![](./images/milestones/dec11/scene_aadepth_1.jpeg)
+
 ## TO DO 
 
 ### Nov 26 : progress report due 
