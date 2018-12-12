@@ -7,6 +7,7 @@
 #define Vect_h
 
 #include "math.h"
+#include <algorithm>
 
 class Vect{
 	double x, y, z;
@@ -35,7 +36,7 @@ class Vect{
 	Vect subtract (Vect); // this - v
 	Vect multiply (double);
 	Vect reflect (Vect);
-	Vect refract (Vect, float);
+	Vect refract (Vect, double);
 };
 
 #endif /* Vect_h */

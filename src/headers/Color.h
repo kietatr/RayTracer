@@ -8,8 +8,6 @@
 
 class Color{
 	double red, green, blue;
-	
-	// double special;
 	double reflectivity, transparency;
 	
 public:
@@ -22,14 +20,12 @@ public:
 	double getR ();
 	double getG ();
 	double getB ();
-	// double getSpecial();
 	double getReflectivity();
 	double getTransparency();
 	
 	void setR (double);
 	void setG (double);
 	void setB (double);
-	// void setSpecial (double);
 	
 	double brightness ();
 	Color colorScale (double);

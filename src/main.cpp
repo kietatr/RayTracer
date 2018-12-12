@@ -13,7 +13,7 @@
 vector<Object*> scene_objects;
 
 int main (int argc, char *argv[]){
-    // anti-aliasing depth
+	// anti-aliasing depth
 	// aadepth = 1 -> NO anti-aliasing
 	// aadepth = 4 -> send 4 new rays at each pixel
 	int aadepth = 1;
@@ -22,8 +22,8 @@ int main (int argc, char *argv[]){
 
 	cout << "Rendering... " <<endl;
 
-    clock_t t1, t2;
-    t1 = clock();
+	clock_t t1, t2;
+	t1 = clock();
 	
 	//image width and height
 	int width = 640;
@@ -58,12 +58,12 @@ int main (int argc, char *argv[]){
 	// Scene Color
 	Color white_light (1, 1, 1, 0, 0);
 	Color yellow_light (0.7, 0.7, 0.0, 0, 0);
-	Color red_reflective (1, 0, 0, 0.5, 0.9);
-	Color green_reflective (0, 1, 0, 0.3, 0.0);
-	Color blue_reflective (0, 0, 1, 0.5, 0.0);
-	Color yellow_reflective (1, 1, 0, 0.3, 0.0);
-	Color cyan_reflective (0, 1, 1, 0.4, 0.0);
-	Color magenta_reflective (1, 0, 1, 0.2, 0.0);
+	Color red_reflective (1, 0, 0, 0.7, 0.9);
+	Color green_reflective (0, 1, 0, 0.3, 0.1);
+	Color blue_reflective (0, 0, 1, 0.5, 0.1);
+	Color yellow_reflective (1, 1, 0, 0.3, 0.1);
+	Color cyan_reflective (0, 1, 1, 0.4, 0.1);
+	Color magenta_reflective (1, 0, 1, 0.2, 0.1);
 	Color plane_purple (0, 0, 0.5, 0.222, 0);
 	
 	// Light sources
@@ -208,7 +208,7 @@ int main (int argc, char *argv[]){
 	delete pixels, tempRed, tempGreen, tempBlue;
 
 	t2 = clock();
-	float diff = ((float) t2 - (float) t1) / CLOCKS_PER_SEC;
+	double diff = ((double) t2 - (double) t1) / CLOCKS_PER_SEC;
 	cout << "Rendering time: " << diff << " seconds" << endl;
 
 	#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
@@ -216,5 +216,5 @@ int main (int argc, char *argv[]){
 		getch();
 	#endif
 
-    return 0;
+	return 0;
 }

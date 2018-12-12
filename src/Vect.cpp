@@ -80,7 +80,7 @@ Vect Vect::reflect (Vect normal) {
 }
 
 // 
-// https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/refract.xhtml
+// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
 // 
 // Given:
 // - the current vector as the incident vector: I 
@@ -88,18 +88,23 @@ Vect Vect::reflect (Vect normal) {
 // - ratio of indices of refraction: eta. 
 // Return: the refraction vector, R.
 // 
-Vect Vect::refract (Vect N, float eta) {
+Vect Vect::refract (Vect N, double ior) {
 	Vect I (x, y, z);
 	Vect R (0,0,0);
 
-	float k = 1.0 - eta * eta * (1.0 - N.dot(I) * N.dot(I));
+	double cosi = I.dot(N);
+	if (cosi < -1) {cosi = -1;}
+	if (cosi > 1) {cosi = 1;}
 
-    if (k < 0.0) {
-        return R;
-    }
-    else {
-    	// R = I * eta - N * (eta * dot(N, I) + sqrt(k));
-    	R = (I.multiply(eta)).subtract(N.multiply(eta * N.dot(I) + sqrt(k)));
-        return R;
-    }
+	double etai = 1, etat = ior; 
+	Vect n = N; 
+	if (cosi < 0) { cosi = -cosi; } else { std::swap(etai, etat); n = N.negative(); } 
+	double eta = etai / etat; 
+	double k = 1 - eta * eta * (1 - cosi * cosi);
+	if (k < 0) {
+		return R;
+	}
+	else {
+		return I.multiply(eta).add(n.multiply(eta * cosi - sqrtf(k)));
+	}
 }

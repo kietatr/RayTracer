@@ -17,7 +17,6 @@ class Camera {
 	Vect getCameraDirection ();// { return camdir; }
 	Vect getCameraRight ();// { return camright; }
 	Vect getCameraDown ();// { return camdown; }
-	
 };
 
 #endif

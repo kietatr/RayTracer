@@ -117,11 +117,44 @@ double mix(const double &a, const double &b, const double &mix) {
 	return b * mix + a * (1 - mix);
 }
 
-Color mixColor(Color a, Color b, float mix) {
+Color mixColor(Color a, Color b, double mix) {
 	Color aMixed = a.colorScale(mix);
 	Color bMixed = b.colorScale(1 - mix); 
 	return aMixed.colorAdd(bMixed);
 }
+
+// 
+// https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel
+// Compute the Fresnel term for reflection (kr)
+// 
+double fresnel(Vect I, Vect N, double ior) { 
+	double kr;
+
+	double cosi = I.dot(N);
+	if (cosi < -1) {cosi = -1;}
+	if (cosi > 1) {cosi = 1;}
+
+	double etai = 1, etat = ior; 
+	if (cosi > 0) { std::swap(etai, etat); } 
+	// Compute sini using Snell's law
+	double sint = etai / etat * sqrt(std::max(0.0, 1 - cosi * cosi)); 
+	// Total internal reflection
+	if (sint >= 1) { 
+		kr = 1; 
+	} 
+	else { 
+		double cost = sqrt(std::max(0.0, 1 - sint * sint)); 
+		cosi = fabs(cosi); 
+		double Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost)); 
+		double Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost)); 
+		kr = (Rs * Rs + Rp * Rp) / 2; 
+	} 
+
+	// As a consequence of the conservation of energy, transmittance is given by:
+	// kt = 1 - kr;
+
+	return kr;
+} 
 
 // 
 // Get the color that should be rendered at a ray-object intersection point
@@ -154,97 +187,85 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 
 	////// REFLECTIONS & REFRACTIONS //////
 
-	bool inside = false; 
-    if (inter_ray_direction.dot(closest_object_normal) > 0) {
-        closest_object_normal = closest_object_normal.negative(); 
-        inside = true;
-    }
-
-    float glassR0 = 0.4;
-
 	if (depth < MAX_RECURSION_DEPTH) {
-		
-        // double facingratio = -inter_ray_direction.dot(closest_object_normal); 
-        // double Fresnel = mix(pow(1.0 - facingratio, 3.0), 1.0, 2.2);
 
-		float dotLN = inter_ray_direction.dot(closest_object_normal);
-            if (dotLN > 1.0) dotLN = 1.0;
-            if (dotLN < 0.0) dotLN = 0.0;
-        double Fresnel = mix(pow((1.0 - dotLN), 5.0), 1.0, glassR0);
+		double ior = 1.5;
+		double biasAmount = 1e-4; 
 
-        Color reflection_color (0,0,0,0,0);
-        Color refraction_color (0,0,0,0,0);
+		double kr = fresnel(inter_ray_direction, closest_object_normal, ior); // Fresnel term
+		bool outside = inter_ray_direction.dot(closest_object_normal) < 0;
+		Vect bias = closest_object_normal.multiply(biasAmount);
 
-        ////// REFLECTION //////
+		Color reflection_color, refraction_color; 
 
-        if (closest_object_color.getReflectivity() > 0.0) {
-			Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
-			Ray reflection_ray (inter_position, reflection_dir);
+		////// REFLECTION //////
 
-	        // Determine what the reflection ray intersects with
-	        vector<double> reflection_intersections;
+		if (closest_object_color.getReflectivity() > 0.0) {
 
-	        for (int i = 0; i < scene_objects.size(); i++) {
-	            reflection_intersections.push_back(scene_objects.at(i)->findIntersection(reflection_ray));
-	        }
+			Vect reflection_dir = inter_ray_direction.reflect(closest_object_normal).normalize();
+			Vect reflectionRayOrig = outside ? inter_position.add(bias) : inter_position.subtract(bias);
 
-	        int closest_object_with_reflection = closestObject(reflection_intersections);
+			Ray reflection_ray (reflectionRayOrig, reflection_dir);
 
-	        if (closest_object_with_reflection != -1) { // Reflection ray hit something
-	            if (reflection_intersections.at(closest_object_with_reflection) > accuracy) {
-	                Vect reflection_intersection_pos = inter_position.add(reflection_dir.multiply(reflection_intersections.at(closest_object_with_reflection)));
+			// Determine what the reflection ray intersects with
+			vector<double> reflection_intersections;
 
-	                // RECURSION
-	                reflection_color = getColorAt(reflection_intersection_pos, reflection_dir, scene_objects, closest_object_with_reflection, light_sources, accuracy, ambient_light, depth + 1);
-	            }
-	        }
-    	}
+			for (int i = 0; i < scene_objects.size(); i++) {
+				reflection_intersections.push_back(scene_objects.at(i)->findIntersection(reflection_ray));
+			}
 
-        ////// REFRACTION //////
+			int closest_object_with_reflection = closestObject(reflection_intersections);
 
-        if (closest_object_color.getTransparency() > 0.0) { 
-            // double ior = 1.1;
-            double ior = 0.67;
-            double eta = (inside) ? ior : 1 / ior; // are we inside or outside the surface? 
+			if (closest_object_with_reflection != -1) { // Reflection ray hit something
+				if (reflection_intersections.at(closest_object_with_reflection) > accuracy) {
+					Vect reflection_intersection_pos = inter_position.add(reflection_dir.multiply(reflection_intersections.at(closest_object_with_reflection)));
 
-            double cosi = -(closest_object_normal.dot(inter_ray_direction)); 
-            double k = 1 - eta * eta * (1 - cosi * cosi);
+					// RECURSION
+					reflection_color = getColorAt(reflection_intersection_pos, reflection_dir, scene_objects, closest_object_with_reflection, light_sources, accuracy, ambient_light, depth + 1);
+				}
+			}
+		}
 
-            Vect refraction_dir = (inter_ray_direction.multiply(eta)).add( (closest_object_normal .multiply(eta *  cosi - sqrt(k))) );
+		////// REFRACTION //////
 
-            refraction_dir = refraction_dir.normalize();
+		if (closest_object_color.getTransparency() > 0.0) {
 
-            // Vect refraction_dir = inter_ray_direction.refract(closest_object_normal.negative(), eta);
-            // refraction_dir = refraction_dir.normalize();
+			Vect refraction_dir; 
+			Vect refractionRayOrig;
 
-            Ray refraction_ray (inter_position, refraction_dir);
+			if (kr < 1) { 
+				refraction_dir = (inter_ray_direction.refract(closest_object_normal, ior)).normalize();
+				refractionRayOrig = outside ? inter_position.subtract(bias) : inter_position.add(bias);
+			}
 
-            // Determine what the refraction ray intersects with
-	        vector<double> refraction_intersections;
+			Ray refraction_ray (refractionRayOrig, refraction_dir);
 
-	        for (int i = 0; i < scene_objects.size(); i++) {
-	            refraction_intersections.push_back(scene_objects.at(i)->findIntersection(refraction_ray));
-	        }
+			// Determine what the refraction ray intersects with
+			vector<double> refraction_intersections;
 
-	        int closest_object_with_refraction = closestObject(refraction_intersections);
+			for (int i = 0; i < scene_objects.size(); i++) {
+				refraction_intersections.push_back(scene_objects.at(i)->findIntersection(refraction_ray));
+			}
 
-	        if (closest_object_with_refraction != -1) { // Refraction ray hit something
-	            if (refraction_intersections.at(closest_object_with_refraction) > accuracy) {
-	                Vect refraction_inter_pos = inter_position.add(refraction_dir.multiply(refraction_intersections.at(closest_object_with_refraction)));
+			int closest_object_with_refraction = closestObject(refraction_intersections);
 
-	                // RECURSION
-	               	refraction_color = getColorAt(refraction_inter_pos, refraction_dir, scene_objects, closest_object_with_refraction, light_sources, accuracy, ambient_light, depth + 1);
-	            }
-	        }
-        } 
+			if (closest_object_with_refraction != -1) { // Refraction ray hit something
+				if (refraction_intersections.at(closest_object_with_refraction) > accuracy) {
+					Vect refraction_inter_pos = inter_position.add(refraction_dir.multiply(refraction_intersections.at(closest_object_with_refraction)));
 
-        // Final color = mix reflect and refract according to Fresnel value
-        final_color = final_color.colorAdd(mixColor(
-        	reflection_color.colorScale(closest_object_color.getReflectivity()), 
-        	refraction_color.colorScale(closest_object_color.getTransparency()), 
-        	Fresnel
-        ));
-    }
+					// RECURSION
+					refraction_color = getColorAt(refraction_inter_pos, refraction_dir, scene_objects, closest_object_with_refraction, light_sources, accuracy, ambient_light, depth + 1);
+				}
+			}
+		}
+
+		// hitColor += reflectionColor * kr + refractionColor * (1 - kr);
+		final_color = final_color.colorAdd(
+			reflection_color.colorScale((kr) * closest_object_color.getReflectivity()).colorAdd(
+				refraction_color.colorScale((1-kr) * closest_object_color.getTransparency())
+				)
+			);
+	}
 
 	////// SHADOWS //////
 	for (int i = 0; i < light_sources.size(); i++){
@@ -291,18 +312,20 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 			
 			if (shadow == false){
 				//depends on intensity (multiplication)
-				//linear algebra .... ???
 				final_color = final_color.colorAdd(closest_object_color.colorMultiply(light_sources.at(i)->getLightColor()).colorScale(cos_angle));
 				
-				if (closest_object_color.getReflectivity() > 0 && closest_object_color.getReflectivity() <= 1) {
-					//special = 0 to 1 : shininess
+				if (closest_object_color.getReflectivity() > 0.0) {
+					double objReflectivity = closest_object_color.getReflectivity();
+
+					if (objReflectivity > 1.0) {objReflectivity = 1.0;}
+					
 					Vect reflection_dir = (inter_ray_direction.reflect(closest_object_normal)).normalize();
 					
 					double specular = reflection_dir.dot(light_dir);
 					
 					if (specular > 0) {
 						specular = pow(specular, 10);
-						final_color = final_color.colorAdd(light_sources.at(i)->getLightColor().colorScale(specular*closest_object_color.getReflectivity()));
+						final_color = final_color.colorAdd(light_sources.at(i)->getLightColor().colorScale(specular*objReflectivity));
 					}
 				}
 				
