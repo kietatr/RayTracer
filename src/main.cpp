@@ -58,7 +58,7 @@ int main (int argc, char *argv[]){
 	// Scene Color
 	Color white_light (0.8, 0.8, 0.8, 0, 0);
 	Color yellow_light (0.7, 0.7, 0.0, 0, 0);
-	Color red_reflective (1, 0, 0, 2.0, 1.2);
+	Color red_reflective (1, 0, 0, 2.0, 0.7);
 	Color green_reflective (0, 1, 0, 2.0, 1.0);
 	Color blue_reflective (0, 0, 1, 2.0, 0.7);
 	Color yellow_reflective (1, 1, 0, 2.0, 0.5);
