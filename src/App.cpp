@@ -166,7 +166,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
 
 	////// CHECKERED FLOOR //////
-	if (closest_object_color.getReflectivity() == 0.222) {
+	if (closest_object_color.getReflectivity() == 1.777) {
 		int square = (int) inter_position.getX() + (int) inter_position.getZ();
 
 		if ((square % 2) == 0) {
@@ -190,13 +190,14 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	if (depth < MAX_RECURSION_DEPTH) {
 
 		double ior = 1.5;
-		double biasAmount = 1e-4; 
+		double biasAmount = 1e-6; // to prevent acne (dots) effect
 
 		double kr = fresnel(inter_ray_direction, closest_object_normal, ior); // Fresnel term
 		bool outside = inter_ray_direction.dot(closest_object_normal) < 0;
 		Vect bias = closest_object_normal.multiply(biasAmount);
 
-		Color reflection_color, refraction_color; 
+		Color reflection_color (0,0,0,0,0); 
+		Color refraction_color (0,0,0,0,0); 
 
 		////// REFLECTION //////
 

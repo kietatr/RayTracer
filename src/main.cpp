@@ -33,7 +33,7 @@ int main (int argc, char *argv[]){
 
 	double aspect_ratio = (double)width / (double)height;
 	double ambientlight = 0.15;
-	double accuracy = 0.000001; //to ensure intersection is outside object
+	double accuracy = 1e-8; //to ensure intersection is outside object
 	
 	//image properties
 	int dpi = 72;
@@ -56,15 +56,15 @@ int main (int argc, char *argv[]){
 	Camera scene_cam (cam_pos, cam_dir, cam_right, cam_down);
 
 	// Scene Color
-	Color white_light (1, 1, 1, 0, 0);
+	Color white_light (0.8, 0.8, 0.8, 0, 0);
 	Color yellow_light (0.7, 0.7, 0.0, 0, 0);
-	Color red_reflective (1, 0, 0, 0.7, 0.9);
-	Color green_reflective (0, 1, 0, 0.3, 0.1);
-	Color blue_reflective (0, 0, 1, 0.5, 0.1);
-	Color yellow_reflective (1, 1, 0, 0.3, 0.1);
-	Color cyan_reflective (0, 1, 1, 0.4, 0.1);
-	Color magenta_reflective (1, 0, 1, 0.2, 0.1);
-	Color plane_purple (0, 0, 0.5, 0.222, 0);
+	Color red_reflective (1, 0, 0, 2.0, 1.2);
+	Color green_reflective (0, 1, 0, 2.0, 1.0);
+	Color blue_reflective (0, 0, 1, 2.0, 0.7);
+	Color yellow_reflective (1, 1, 0, 2.0, 0.5);
+	Color cyan_reflective (0, 1, 1, 2.0, 1.0);
+	Color magenta_reflective (1, 0, 1, 2.0, 0.7);
+	Color plane_purple (0, 0, 0.5, 1.777, 0.5);
 	
 	// Light sources
 	vector<Source*> light_sources;
