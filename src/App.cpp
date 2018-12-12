@@ -166,7 +166,7 @@ Color getColorAt(Vect inter_position, Vect inter_ray_direction, vector<Object*> 
 	Vect closest_object_normal = scene_objects.at(closest_object)->getNormalAt(inter_position);
 
 	////// CHECKERED FLOOR //////
-	if (closest_object_color.getReflectivity() == 1.777) {
+	if (closest_object_color.getReflectivity() == 0.777) {
 		int square = (int) inter_position.getX() + (int) inter_position.getZ();
 
 		if ((square % 2) == 0) {
