@@ -4,7 +4,7 @@
 
 Implementing a ray tracer from scratch in C++.
 
-This branch contains the code that generates a scene with reflection but no refraction. 
+This branch contains the code that generates a scene with reflection but no refraction. We created a `refraction` branch that includes the code for the refraction model.
 
 ## Build and run the code
 
