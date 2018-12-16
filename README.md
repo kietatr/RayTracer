@@ -58,7 +58,7 @@ make
 
 ## Performance
 
-For **anti-aliasing depth of 1**, the scene is rendered in **2.4 seconds**.
+For **anti-aliasing depth of 1** (no anti-aliasing), the scene is rendered in **2.4 seconds**.
 
 <p align="center">
   <img src="./images/milestones/dec11/scene_aadepth_1.jpeg" alt="Most Recent Result Image"/>
