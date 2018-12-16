@@ -30,7 +30,7 @@ make
 
 ## Overall architecture
 
-**main.cpp**: Render the scene, and save it as a .jpeg image in RayTracer/images/ 
+**main.cpp**: Render the scene, and save it as a .jpeg image in `RayTracer/images/`
 
 - Create objects on the scene (position, color, reflection).
 
