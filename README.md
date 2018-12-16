@@ -2,7 +2,7 @@
 
 ### Ojashvi Rautela and Kiet Tran
 
-Implementing a ray tracer from scratch.
+Implementing a ray tracer from scratch in C++.
 
 ## Build and run the code
 
@@ -28,7 +28,31 @@ make
 
 ## Overall architecture
 
-TODO: fill this up
+**main.cpp**: Render the scene, and save it as a .jpeg image in RayTracer/images/ 
+
+- Create objects on the scene (position, color, reflection).
+
+- For every pixel in the image, create a ray.
+
+- For every ray, call the **getColorAt** function (declared in **App.cpp**), which is our main tracing function.
+
+- Implement anti-aliasing.
+
+**App.cpp**: Contains the helper functions for main.cpp. Some of those functions are:
+
+- **saveImage()**: Save the rendered scene into an image file.
+
+- **closestObject()**: Return the index of the object closest to the camera.
+
+- **getColorAt()**: The main *ray tracing* function. Implement shadows, ambient, diffuse, specular, reflections, refractions, and return the color that should be at each pixel in the image.
+
+**Vect.cpp, Color.cpp, Ray.cpp**: Vector, color, and ray classes.
+
+**Camera.cpp**: Camera position and orientation.
+
+**Light.cpp, Source.cpp**: Light sources.
+
+**Object.cpp, Sphere.cpp, Plane.cpp, Triangle.cpp**: All the objects.
 
 ## Important performance issues
 
