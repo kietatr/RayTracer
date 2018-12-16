@@ -68,7 +68,7 @@ For **anti-aliasing depth of 10**, the scene is rendered in **7 minutes**.
 
 ## Known bugs
 
-Our refraction model isn't realistic image right now. This could be because we didn't implement transparency.
+Our refraction model isn't very realistic right now. This could be because we didn't implement transparency.
 
 <p align="center">
   <img src="./images/milestones/refraction/scene_aadepth_1.jpeg" alt="Refraction"/>
