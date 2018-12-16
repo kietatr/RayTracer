@@ -82,9 +82,9 @@ Made a class to create triangles from 3 points and a normal
 
 ![](./images/milestones/dec11/scene_aadepth_1.jpeg)
 
-### 12/15/18
+### 12/13/18
 
-#### Refraction
+#### Refraction working, but not realistic
 
 ![](./images/milestones/refraction/scene_aadepth_1.jpeg)
 
