@@ -4,6 +4,8 @@
 
 Implementing a ray tracer from scratch in C++.
 
+This branch contains the code that generates a scene with reflection but no refraction. 
+
 ## Build and run the code
 
 ### Windows
@@ -38,7 +40,7 @@ make
 
 - Implement anti-aliasing.
 
-**App.cpp**: Contains the helper functions for main.cpp. Some of those functions are:
+**App.cpp**: Contains the helper functions for main.cpp. The important functions are:
 
 - **saveImage()**: Save the rendered scene into an image file.
 
@@ -52,15 +54,21 @@ make
 
 **Light.cpp, Source.cpp**: Light sources.
 
-**Object.cpp, Sphere.cpp, Plane.cpp, Triangle.cpp**: All the objects.
+**Object.cpp, Sphere.cpp, Plane.cpp, Triangle.cpp**: All the objects, and their intersection functions with a ray.
 
-## Important performance issues
+## Performance
 
-TODO: fill this up
+For **anti-aliasing depth of 1**, the scene is rendered in **2.4 seconds**.
+
+<p align="center">
+  <img src="./images/milestones/dec11/scene_aadepth_1.jpeg" alt="Most Recent Result Image"/>
+</p>
+
+For **anti-aliasing depth of 10**, the scene is rendered in **7 minutes**.
 
 ## Known bugs
 
-TODO: fill this up
+Our refraction model isn't realistic image right now. This could be because we didn't implement transparency. 
 
 ## Latest result
 
