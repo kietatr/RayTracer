@@ -79,5 +79,5 @@ Our refraction model isn't very realistic right now. This could be because we di
 So far, the `raytracer` executable will generate this image (with anti-aliasing depth = 20):
 
 <p align="center">
-  <img src="./images/milestones/dec11/scene_aadepth_20.jpeg" alt="Most Recent Result Image"/>
+  <img src="./images/scene_aadepth_20.jpeg" alt="Most Recent Result Image"/>
 </p>
