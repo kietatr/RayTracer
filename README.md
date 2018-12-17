@@ -61,10 +61,14 @@ make
 For **anti-aliasing depth of 1** (no anti-aliasing), the scene is rendered in **2.4 seconds**.
 
 <p align="center">
-  <img src="./images/milestones/dec11/scene_aadepth_1.jpeg" alt="Most Recent Result Image"/>
+  <img src="./images/scene_aadepth_1.jpeg" alt="Result Image (no anti-aliasing)"/>
 </p>
 
 For **anti-aliasing depth of 10**, the scene is rendered in **7 minutes**.
+
+<p align="center">
+  <img src="./images/scene_aadepth_10.jpeg" alt="Result Image (aadepth = 10)"/>
+</p>
 
 ## Known bugs
 
