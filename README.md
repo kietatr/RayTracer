@@ -1,6 +1,6 @@
 # RayTracer
 
-### Ojashvi Rautela and Kiet Tran
+### Kiet Tran and Ojashvi Rautela
 
 Implementing a ray tracer from scratch in C++.
 
